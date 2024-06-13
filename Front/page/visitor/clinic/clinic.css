@@ -31,7 +31,7 @@
     border: 1px solid #6bb0b0;
 }
 .search{
-    width: 100%;
+    width: 98%;
     padding: 5px;
     margin: auto;
     border-radius: 25px;
@@ -74,7 +74,7 @@
     color: #6bb0b0;
 }
 .data{
-    width: 73%;
+    width: 70%;
     padding: 25px;
     border: 1px #6bb0b0 solid;
     border-radius: 25px;

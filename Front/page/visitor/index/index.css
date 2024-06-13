@@ -1,3 +1,9 @@
+h1{
+    color: rgb(107, 176, 176);
+    font-size: 40px;
+    text-align: center;
+    margin: 50px 0;
+}
 .content img{
     width: 50%;
 }
