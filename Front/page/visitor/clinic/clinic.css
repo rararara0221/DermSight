@@ -1,0 +1,131 @@
+.class{
+    width: 20%;
+    background-color: #e5f2f2;
+    border-radius:  25px 25px 0 0;
+}
+.class>p{
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+    color: #444444;
+    border-radius: 25px 25px 0 0 ;
+}
+.class ul{
+    list-style-type: none;
+    text-align: center;
+}
+.class ul li{
+    margin: 5px;
+}
+.class ul li a{
+    color: #6bb0b0;
+    background-color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+}
+.class ul li a:hover, .class ul li a:active{
+    border: 1px solid #6bb0b0;
+}
+.search{
+    width: 100%;
+    padding: 5px;
+    margin: auto;
+    border-radius: 25px;
+    border: 1px #6bb0b0 solid ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search:focus{
+    border: #6bb0b0;
+    box-shadow: #6bb0b0;
+}
+.search i{
+    padding: 10px;
+    font-size: 20px;
+    color: #6bb0b0;
+    outline: none
+}
+.search input{
+    font-size: 16px;
+    width: 85%;
+    border: none;
+    padding: 10px;
+    outline: none;
+    color: #375c5c;
+}
+.search div{
+    font-size: 14px;
+    border: none;
+    padding: 10px 15px;
+    outline: none;
+    border-radius: 25px;
+    background-color: #6bb0b0;
+    color: #fff;
+    cursor: pointer;
+    border: 1px #6bb0b0 solid;
+}
+.search div:hover{
+    background-color: #fff;
+    color: #6bb0b0;
+}
+.data{
+    width: 73%;
+    padding: 25px;
+    border: 1px #6bb0b0 solid;
+    border-radius: 25px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+.disease{
+    padding: 25px;
+    margin: 10px;
+    border-bottom: 1px solid #6bb0b0;
+}
+.disease-title{
+    color: #375c5c;
+    font-size: 18px;
+    position:relative;
+}
+.disease-title::after{
+    color: #ced299;
+    content:"";
+    display:block;
+    width: 0;
+    height: 4px;
+    background-color: #ced299;
+    position:absolute;
+    right: 0;
+    transition:.4s;
+}
+.disease-title:hover::after{
+    width: 100%;
+    left: 0;
+}
+.disease-description{
+    padding: 10px 0;
+    color: #404040;
+}
+.disease-description p{
+    color: #404040;
+}
+.disease-description span{
+    color: #6bb0b0;
+    padding: 0 5px;
+}
+.page ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page ul li a{
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    color: #626262;
+}

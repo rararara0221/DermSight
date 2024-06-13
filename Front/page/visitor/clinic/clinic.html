@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermSight - 皮膚病癥</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- logo -->
+        <div class="header-left">
+            <a href="../index/index.html">
+                <img src="../../../../img/DermSight.png">
+            </a>
+        </div>
+        <!-- 目錄 -->
+        <div class="header-center">
+            <ul>
+                <li>
+                    <a href="../../訪客/index/index.html">
+                        <i class="fa-solid fa-house"></i>
+                        首頁
+                    </a>
+                </li>
+                <li>
+                    <a href="../../訪客/disease/disease.html">
+                        <i class="fa-solid fa-hand-dots"></i>
+                        皮膚病徵
+                    </a>
+                </li>
+                <li>
+                    <a href="../../訪客/identification/identification.html">
+                        <i class="fa-solid fa-camera"></i>
+                        影像辨識
+                    </a>
+                </li>
+                <li>
+                    <a href="../../訪客/clinic/clinic.html">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                        診所資訊
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="header-right">
+            <a href="../../verify/verify.html" >登入 / 註冊</a>
+        </div>
+    </header>
+    <!-- Section -->
+    <section class="content">
+        <div class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search">
+            <div>Search</div>
+        </div>
+    </section>
+    <section class="data">
+        <div class="disease">
+            <a href="#" class="disease-title">
+                高惠峰皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市中西區法華里府連路41號1樓</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                曾炳榮皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市中西區小西里府前路1段337號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                郭綜合醫院
+            </a>
+            <div class="disease-description">
+                <p>臺南市中西區民生路2段22號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                台南市立醫院(委託秀傳醫療社團法人經營)
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區崇德路670號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                王肇陽皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區德光里崇明路79號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                黃輝鵬皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區崇學里崇德路283號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                麥鎮平皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區大學里長榮路3段129號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                許乃仁皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區崇德里崇德路563號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                張宏任皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區中西里東寧路178號</p>
+            </div>
+        </div>
+        <div class="disease">
+            <a href="#" class="disease-title">
+                林俞志皮膚科診所
+            </a>
+            <div class="disease-description">
+                <p>臺南市東區龍山里長榮路1段188號</p>
+            </div>
+        </div>
+        <div class="page">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        1
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        2
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        3
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <footer>
+        Copyright © 2024 DermSight Company S.L. All rights reserved.
+    </footer>
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewImage = document.getElementById('imagePreview');
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

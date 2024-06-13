@@ -1,0 +1,93 @@
+.file{
+    width: 45%;
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px #6bb0b0 solid;
+}
+.file p{
+    color: #6bb0b0;
+    font-weight: bolder;
+    font-size: 30px;
+    text-align: center;
+}
+.upload{
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content:flex-start;
+}
+
+.upload label{
+    margin: 0 5px;
+}
+input[type="file"] {
+    display: none;
+}
+.upload-container, .upload input {
+    font-size: 16px;
+    color: #fff;
+    border: 1px #6bb0b0 solid;
+    background-color: #6bb0b0;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.upload-container:hover, .upload input:hover {
+    color: #6bb0b0;
+    background-color: #fff;
+}
+.upload input{
+    background-color: #7f815f;
+    border: 1px #7f815f solid;
+}
+.upload input:hover{
+    color: #7f815f;
+    background-color: #fff;
+}
+#result{
+    display: none;
+}
+.result-container{
+    width: 100%-padding;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 25px;
+    background-color: #6bb0b0;
+    color: #fff;
+    border-radius: 25px;
+}
+.preview-container {
+    width: 100%;
+    margin-top: 20px;
+    overflow: hidden;
+    height: 400px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+}
+.result-disease{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.result-disease p{
+    margin: 0 15px;
+    font-size: 24px;
+    color: #fff;
+}
+.result-img img{
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 15px;
+}
+.result-description{
+    margin: 15px 0;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermSight - 影像辨識</title>
+    <link rel="stylesheet" href="identification.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+    <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- logo -->
+        <div class="header-left">
+            <a href="../index/index.html">
+                <img src="../../../../img/DermSight.png">
+            </a>
+        </div>
+        <!-- 目錄 -->
+        <div class="header-center">
+            <ul>
+                <li>
+                    <a href="../index/index.html">
+                        <i class="fa-solid fa-house"></i>
+                        首頁
+                    </a>
+                </li>
+                <li>
+                    <a href="../disease/disease.html">
+                        <i class="fa-solid fa-hand-dots"></i>
+                        皮膚病徵
+                    </a>
+                </li>
+                <li>
+                    <a href="../identification/identification.html">
+                        <i class="fa-solid fa-camera"></i>
+                        影像辨識
+                    </a>
+                </li>
+                <li>
+                    <a href="../clinic/clinic.html">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                        診所資訊
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="header-right">
+            <a href="../user/user.html" >
+                <i class="fa-solid fa-circle-user"></i>
+                小皮
+            </a>
+        </div>
+    </header>
+    <!-- Section -->
+    <section class="content">
+        <div class="file">
+            <p>辨識圖片</p>
+            <div class="preview-container">
+                <img id="imagePreview" class="preview-image" alt="Image Preview">
+            </div>
+            <div class="upload">
+                <label class="upload-container">
+                    <input type="file" id="imageUpload" accept="image/*">
+                    選擇檔案
+                </label >
+                <div class="submit-container">
+                    <input type="submit" id="upload">
+                </div>
+            </div>
+        </div>
+        <div class="file" id="result">
+            <p>辨識結果</p>
+            
+            <div class="result-container">
+                <div class="result-disease">
+                    <p>接觸性皮膚病</p>
+                    <p>初期</p>
+                </div>
+                <div class="result-img">
+                    <img src="../../../img/contact dermatitis.jpg">
+                </div>
+                <div class="result-description">
+                    接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應，可分為兩大類型：刺激性和過敏性，此外存在其他病因可能引發接觸性皮膚炎，例如刺激性、過敏性日光性皮膚炎，在這種情況下，引起皮膚炎症的刺激源可能是外界刺激、過敏原或陽光等多種因素。
+                </div>
+            </div>
+            <div class="upload">
+                <div class="submit-container">
+                    <input type="submit" value="儲存">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        Copyright © 2024 DermSight Company S.L. All rights reserved.
+    </footer>
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewImage = document.getElementById('imagePreview');
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        const upload = document.getElementById('upload');
+        const result = document.getElementById('result');
+
+        upload.addEventListener('click', function() {
+            result.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
