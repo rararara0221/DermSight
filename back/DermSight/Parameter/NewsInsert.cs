@@ -16,6 +16,6 @@ namespace DermSight.Parameter
         [Required(ErrorMessage ="請輸入內容")]
         public required string Content { get; set; }
         [DisplayName("置頂")]
-        public bool Pin { get; set; }
+        public bool isPin { get; set; }
     }
 }

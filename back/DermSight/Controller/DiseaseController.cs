@@ -8,16 +8,16 @@ using DermSight.ViewModels;
 namespace DermSight.Controller
 {
     [Route("DermSight/[controller]")]
-    public class NewsController(NewsService _NewsService,UserService _UserService) : ControllerBase
+    public class DiseaseController(DiseaseService _DiseaseService,UserService _UserService) : ControllerBase
     {
 
-        public NewsService NewsService = _NewsService;
+        public DiseaseService DiseaseService = _DiseaseService;
         public UserService UserService = _UserService;
 
-        #region 取得最新消息列表
+        #region 取得疾病列表
         [HttpGet]
-        [Route("AllNews")]
-        public IActionResult GetAllNewsList([FromQuery]string? Search,[FromQuery]int page = 1){
+        [Route("AllDisease")]
+        public IActionResult GetAllDiseaseList([FromQuery]string? Search,[FromQuery]int page = 1){
             try
             {
                 // if(User.Identity == null || User.Identity.Name == null){
@@ -26,12 +26,12 @@ namespace DermSight.Controller
                 //         message = "請先登入"
                 //     });
                 // }
-                NewsViewModel data = new()
+                DiseaseViewModel data = new()
                 {
                     Forpaging = new Forpaging(page),
                     Search = string.IsNullOrEmpty(Search) ? "" : Search
                 };
-                data.NewsList = NewsService.GetAllNewsList(data);
+                data.DiseaseList = DiseaseService.GetAllDiseaseList(data);
                 return Ok(new Response(){
                     status_code = 200,
                     message = "讀取成功",
@@ -48,10 +48,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 取得最新消息(單一)
+        #region 取得疾病(單一)
         [HttpGet]
         [Route("")]
-        public IActionResult GetNews([FromQuery]int NewsId){
+        public IActionResult GetDisease([FromQuery]int DiseaseId){
             try
             {
                 // if(User.Identity == null || User.Identity.Name == null){
@@ -60,11 +60,11 @@ namespace DermSight.Controller
                 //         message = "請先登入"
                 //     });
                 // }
-                News Data = NewsService.Get(NewsId);
-                if(Data == null){
+                DiseaseSymptom Data = DiseaseService.GetDiseaseSymptom(DiseaseId);
+                if(Data.Disease == null){
                     return Ok(new Response(){
                         status_code = 204,
-                        message = "無該最新消息或以刪除"
+                        message = "無該疾病或以刪除"
                     });
                 }
                 return Ok(new Response(){
@@ -83,10 +83,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 新增最新消息
+        #region 新增疾病
         [HttpPost]
         [Route("")]
-        public IActionResult InsertNews([FromBody]NewsInsert Data){
+        public IActionResult InsertDisease([FromBody]DiseaseInsert Data){
             try{
                 if(ModelState.IsValid){
                     if(User.Identity == null || User.Identity.Name == null){
@@ -102,19 +102,17 @@ namespace DermSight.Controller
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;
-                    News news = new(){
-                        UserId = userId,
-                        Title = Data.Title,
-                        Type = Data.Type,
-                        Content = Data.Content,
-                        isPin = Data.isPin
+                    Disease Disease = new(){
+                        DiseaseId = Data.DiseaseId,
+                        Name = Data.Name,
+                        Description = Data.Description
                     };
-                    news.NewsId = NewsService.Create(news);
-                    news = NewsService.Get(news.NewsId);
+                    List<string> Symptom = Data.Symptom;
+                    Disease.DiseaseId = DiseaseService.Create(Disease, Symptom);
                     return Ok(new Response{
                         status_code = 200,
                         message = "新增成功",
-                        data = news
+                        data = DiseaseService.GetDiseaseSymptom(Disease.DiseaseId)
                     });
                 }
                 else{
@@ -139,10 +137,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 修改最新消息
+        #region 修改疾病
         [HttpPut]
         [Route("")]
-        public IActionResult UpdateNews([FromBody]NewsUpdate Data){
+        public IActionResult UpdateDisease([FromBody]DiseaseUpdate Data){
             try
             {
                 if(ModelState.IsValid){
@@ -158,26 +156,23 @@ namespace DermSight.Controller
                             message = "權限不足"
                         });
                     }
-                    if(NewsService.Get(Data.NewsId) == null){
+                    if(DiseaseService.Get(Data.DiseaseId)==null){
                         return BadRequest(new Response(){
                             status_code = 400,
-                            message = "無該最新消息或以刪除"
+                            message = "無該疾病或以刪除"
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;
-                    News news = new(){
-                        NewsId = Data.NewsId,
-                        Type = Data.Type,
-                        Title = Data.Title,
-                        Content = Data.Content,
-                        isPin = Data.isPin
+                    Disease Disease = new(){
+                        DiseaseId = Data.DiseaseId,
+                        Name = Data.Name,
+                        Description = Data.Description
                     };
-                    NewsService.Update(news);
-                    news = NewsService.Get(news.NewsId);
+                    DiseaseService.Update(Disease,Data.Symptoms);
                     return Ok(new Response{
                         status_code = 200,
                         message = "修改成功",
-                        data = news
+                        data = DiseaseService.GetDiseaseSymptom(Disease.DiseaseId)
                     });
                 }
                 else{
@@ -203,10 +198,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 刪除最新消息
+        #region 刪除疾病
         [HttpDelete]
         [Route("")]
-        public IActionResult DeleteNews([FromQuery]int NewsId){
+        public IActionResult DeleteDisease([FromQuery]int DiseaseId){
             try
             {
                 if(User.Identity == null || User.Identity.Name == null){
@@ -221,13 +216,13 @@ namespace DermSight.Controller
                         message = "權限不足"
                     });
                 }
-                if(NewsService.Get(NewsId) == null){
+                if(DiseaseService.Get(DiseaseId)==null){
                     return BadRequest(new Response(){
                         status_code = 400,
-                        message = "無該最新消息或以刪除"
+                        message = "無該疾病或以刪除"
                     });
                 }
-                NewsService.Delete(NewsId);
+                DiseaseService.Delete(DiseaseId);
                 return Ok(new Response{
                     status_code = 200,
                     message = "成功刪除"
