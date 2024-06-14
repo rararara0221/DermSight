@@ -77,7 +77,7 @@ namespace DermSight.Services
         // 查詢資料
         public News Get(int id)
         {
-            var sql = $@"SELECT * FROM News WHERE newsId = {id} WHERE isDelete = 0";
+            var sql = $@"SELECT * FROM [News] WHERE newsId = {id} AND isDelete = 0";
             using var conn = new SqlConnection(cnstr);
             return conn.QueryFirstOrDefault<News>(sql);
         }
@@ -85,27 +85,27 @@ namespace DermSight.Services
         public int Create(News Data)
         {
             var sql = $@" 
-                          INSERT INTO News(userId,title,type,contnet,pin)
-                          VALUES(@UserId,@Title,@Type,@Contnet,@Pin)
-                          SET @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
+                          INSERT INTO News(userId,title,type,content,pin)
+                          VALUES(@UserId,@Title,@Type,@Content,@Pin)
+                          DECLARE @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
                           SELECT @newsId
                         "; 
             using var conn = new SqlConnection(cnstr);
-            return conn.QueryFirst<int>(sql, Data);
+            return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Data.isPin});
         }
         // 修改資料
-        public void Update(int id, NewsUpdate Data)
+        public void Update(News Data)
         {
-            var sql = $@"UPDATE News SET title = @Title ,contnet = @Contnet ,pin = @Pin WHERE newsId = @id ;";
+            var sql = $@"UPDATE News SET title = @Title ,content = @Content ,pin = @Pin WHERE newsId = @Newsid";
             using var conn = new SqlConnection(cnstr);
-            conn.Execute(sql, new { id, Data.Title, Data.Content });
+            conn.Execute(sql, Data); // new { Data.NewsId, Data.Title, Data.Content ,Data.Pin}
         }
         // 刪除資料
-        public void Delete(int id)
+        public void Delete(int Newsid)
         {
-            var sql = $@"UPDATE FROM News SET isDelete = 1 WHERE newsId = @id ;";
+            var sql = $@"UPDATE News SET isDelete = 1 WHERE newsId = @Newsid ;";
             using var conn = new SqlConnection(cnstr);
-            conn.Execute(sql, new{id});
+            conn.Execute(sql, new{Newsid});
         }
     }
 }
