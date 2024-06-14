@@ -1,0 +1,127 @@
+.search{
+    width: 95%;
+    padding: 5px;
+    border-radius: 25px;
+    border: 1px #6bb0b0 solid ;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search:focus{
+    border: #6bb0b0;
+    box-shadow: #6bb0b0;
+}
+.search i{
+    padding: 10px;
+    font-size: 20px;
+    color: #6bb0b0;
+    outline: none
+}
+.search input{
+    font-size: 16px;
+    width: 90%;
+    border: none;
+    padding: 10px;
+    outline: none;
+    color: #375c5c;
+}
+.search div, .news-insert{
+    font-size: 14px;
+    border: none;
+    padding: 10px 15px;
+    outline: none;
+    border-radius: 25px;
+    background-color: #6bb0b0;
+    color: #fff;
+    cursor: pointer;
+    border: 1px #6bb0b0 solid;
+}
+.search div:hover{
+    background-color: #fff;
+    color: #6bb0b0;
+}
+
+.news{
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #e6e6e6;
+}
+.news-title{
+    color: 4E6460;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 0;
+}
+.news-top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.news-list{
+    margin: 20px 0;
+}
+.news-list table{
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.news-list thead{
+    color: #fefefe;
+    font-weight: bolder;
+    background-color: #6bb0b0;
+}
+.news-list table th, .news-list table td {
+    padding: 15px;
+}
+.news-list table td img{
+    width: 100%;
+    border-radius: 15px;
+}
+.news-list table td a{
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 5px 0px;
+    background-color: #6bb0b0;
+    color: #fff;
+    border: 1px #6bb0b0 solid;
+}
+.news-list table td a:hover{
+    background-color: #ffffff;
+    color: #6bb0b0;
+}
+.news-list table tr td:first-child{
+    width: 10%;
+}
+.news-list table tr td:nth-child(2){
+    width: 10%;
+}
+.news-list table tr td:last-child{
+    width: 15%;
+    text-align: right;
+} 
+.news-list table tfoot tr:hover{
+    background-color: #fff;
+}
+.page ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page ul li a{
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    color: #626262;
+}
+.news-content{
+    width: 64%;
+    height: 425px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #c5dbdb;
+}
