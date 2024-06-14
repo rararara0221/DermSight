@@ -1,0 +1,6 @@
+@DermSight_HostAddress = http://localhost:5111
+
+GET {{DermSight_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

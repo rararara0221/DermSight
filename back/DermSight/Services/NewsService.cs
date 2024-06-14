@@ -1,0 +1,111 @@
+using DermSight.Models;
+using Dapper;
+using System.Data.SqlClient;
+using DermSight.Service;
+using DermSight.ViewModels;
+using DermSight.Parameter;
+
+namespace DermSight.Services
+{
+    public class NewsService(IConfiguration configuration)
+    {
+        //資料庫連線字串
+        private readonly string? cnstr = configuration.GetConnectionString("ConnectionStrings");
+
+        // 列表
+        public List<News> GetAllNewsList(NewsViewModel newsViewModel)
+        {
+            List<News> Data;
+            //判斷是否有增加搜尋值
+            if(string.IsNullOrEmpty(newsViewModel.Search)){
+                SetMaxPage(newsViewModel.Forpaging);
+                Data = GetNewsList(newsViewModel.Forpaging);
+            }
+            else{
+                SetMaxPage(newsViewModel.Search,newsViewModel.Forpaging);
+                Data = GetNewsList(newsViewModel.Search,newsViewModel.Forpaging);
+            }
+            return Data;
+        }
+
+        private List<News> GetNewsList(Forpaging forpaging)
+        {
+            string sql = $@"SELECT * FROM (
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
+                                WHERE isDelete = 0
+                            )a
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+            using var conn = new SqlConnection(cnstr);
+            List<News> data = new(conn.Query<News>(sql));
+            return (List<News>)conn.Query<News>(sql);
+        }
+
+        private void SetMaxPage(Forpaging Forpaging)
+        {
+            string sql = $@"
+                            SELECT COUNT(*) FROM [News]
+                            WHERE isDelete = 0
+                        ";
+            using var conn = new SqlConnection(cnstr);
+            int row = conn.QueryFirst<int>(sql);
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.SetRightPage();
+        }
+        
+        private List<News> GetNewsList(string Search,Forpaging forpaging)
+        {
+            string sql = $@"SELECT * FROM (
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
+                                WHERE title LIKE '%{Search}%' OR content LIKE '%{Search}%' AND isDelete = 0
+                            )a
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+            using var conn = new SqlConnection(cnstr);
+            List<News> data = new(conn.Query<News>(sql));
+            return (List<News>)conn.Query<News>(sql);
+        }
+
+        private void SetMaxPage(string Search, Forpaging Forpaging)
+        {
+            string sql = $@"SELECT COUNT(*) FROM [News] WHERE title LIKE '%{Search}%' OR content LIKE '%{Search}%' AND isDelete = 0";
+            using var conn = new SqlConnection(cnstr);
+            int row = conn.QueryFirst<int>(sql);
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.SetRightPage();
+        }
+
+
+        // 查詢資料
+        public News Get(int id)
+        {
+            var sql = $@"SELECT * FROM News WHERE newsId = {id} WHERE isDelete = 0";
+            using var conn = new SqlConnection(cnstr);
+            return conn.QueryFirstOrDefault<News>(sql);
+        }
+        // 新增資料
+        public int Create(News Data)
+        {
+            var sql = $@" 
+                          INSERT INTO News(userId,title,type,contnet,pin)
+                          VALUES(@UserId,@Title,@Type,@Contnet,@Pin)
+                          SET @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
+                          SELECT @newsId
+                        "; 
+            using var conn = new SqlConnection(cnstr);
+            return conn.QueryFirst<int>(sql, Data);
+        }
+        // 修改資料
+        public void Update(int id, NewsUpdate Data)
+        {
+            var sql = $@"UPDATE News SET title = @Title ,contnet = @Contnet ,pin = @Pin WHERE newsId = @id ;";
+            using var conn = new SqlConnection(cnstr);
+            conn.Execute(sql, new { id, Data.Title, Data.Content });
+        }
+        // 刪除資料
+        public void Delete(int id)
+        {
+            var sql = $@"UPDATE FROM News SET isDelete = 1 WHERE newsId = @id ;";
+            using var conn = new SqlConnection(cnstr);
+            conn.Execute(sql, new{id});
+        }
+    }
+}
