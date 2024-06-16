@@ -1,31 +1,32 @@
-using Microsoft.AspNetCore.Mvc;
 using DermSight.Models;
-using DermSight.Services;
 using DermSight.Parameter;
 using DermSight.Service;
+using DermSight.Services;
 using DermSight.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DermSight.Controller
 {
     [Route("DermSight/[controller]")]
-    public class DiseaseController(DiseaseService _DiseaseService,UserService _UserService) : ControllerBase
+    public class ClinicController(ClinicService _ClinicService,UserService _UserService) : ControllerBase
     {
-
-        public DiseaseService DiseaseService = _DiseaseService;
+        
+        readonly ClinicService ClinicService = _ClinicService;
         public UserService UserService = _UserService;
 
         #region 取得疾病列表
         [HttpGet]
-        [Route("AllDisease")]
-        public IActionResult GetAllDiseaseList([FromQuery]string? Search,[FromQuery]int page = 1){
+        [Route("AllClinic")]
+        public IActionResult GetAllClinicList([FromQuery]string? Search,[FromQuery]int CityId = 0,[FromQuery]int page = 1){
             try
             {
-                DiseaseViewModel data = new()
+                ClinicViewModel data = new()
                 {
                     Forpaging = new Forpaging(page),
-                    Search = string.IsNullOrEmpty(Search) ? "" : Search
+                    Search = string.IsNullOrEmpty(Search) ? "" : Search,
+                    CityId = CityId,
                 };
-                data.DiseaseList = DiseaseService.GetAllDiseaseList(data);
+                data.ClinicList = ClinicService.GetAllClinicList(data);
                 return Ok(new Response(){
                     status_code = 200,
                     message = "讀取成功",
@@ -42,45 +43,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 取得疾病(單一)
-        [HttpGet]
-        [Route("")]
-        public IActionResult GetDisease([FromQuery]int DiseaseId){
-            try
-            {
-                // if(User.Identity == null || User.Identity.Name == null){
-                //     return BadRequest(new Response(){
-                //         status_code = 400,
-                //         message = "請先登入"
-                //     });
-                // }
-                DiseaseSymptom Data = DiseaseService.GetDiseaseSymptom(DiseaseId);
-                if(Data.Disease == null){
-                    return Ok(new Response(){
-                        status_code = 204,
-                        message = "無該疾病或以刪除"
-                    });
-                }
-                return Ok(new Response(){
-                    status_code = 200,
-                    message = "讀取成功",
-                    data = Data
-                });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response{
-                    status_code = 400,
-                    message = e.Message
-                });
-            }
-        }
-        #endregion
-
         #region 新增疾病
         [HttpPost]
         [Route("")]
-        public IActionResult InsertDisease([FromBody]DiseaseInsert Data){
+        public IActionResult InsertClinic([FromBody]ClinicInsert Data){
             try{
                 if(ModelState.IsValid){
                     if(User.Identity == null || User.Identity.Name == null){
@@ -96,17 +62,16 @@ namespace DermSight.Controller
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;
-                    Disease Disease = new(){
-                        DiseaseId = Data.DiseaseId,
+                    Clinic Clinic = new(){
+                        CityId = Data.CityId,
                         Name = Data.Name,
-                        Description = Data.Description
+                        Address = Data.Address
                     };
-                    List<string> Symptom = Data.Symptom;
-                    Disease.DiseaseId = DiseaseService.Create(Disease, Symptom);
+                    Clinic.ClinicId = ClinicService.Create(Clinic);
                     return Ok(new Response{
                         status_code = 200,
                         message = "新增成功",
-                        data = DiseaseService.GetDiseaseSymptom(Disease.DiseaseId)
+                        data = ClinicService.Get(Clinic.ClinicId)
                     });
                 }
                 else{
@@ -131,10 +96,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 修改疾病
+        #region 修改最新消息
         [HttpPut]
         [Route("")]
-        public IActionResult UpdateDisease([FromBody]DiseaseUpdate Data){
+        public IActionResult UpdateClinic([FromBody]ClinicUpdate Data){
             try
             {
                 if(ModelState.IsValid){
@@ -150,23 +115,25 @@ namespace DermSight.Controller
                             message = "權限不足"
                         });
                     }
-                    if(DiseaseService.Get(Data.DiseaseId)==null){
+                    if(ClinicService.Get(Data.ClinicId) == null){
                         return BadRequest(new Response(){
                             status_code = 400,
-                            message = "無該疾病或以刪除"
+                            message = "無該最新消息或以刪除"
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;
-                    Disease Disease = new(){
-                        DiseaseId = Data.DiseaseId,
+                    Clinic Clinic = new(){
+                        ClinicId = Data.ClinicId,
+                        CityId = Data.CityId,
                         Name = Data.Name,
-                        Description = Data.Description
+                        Address = Data.Address
                     };
-                    DiseaseService.Update(Disease,Data.Symptoms);
+                    ClinicService.Update(Clinic);
+                    Clinic = ClinicService.Get(Clinic.ClinicId);
                     return Ok(new Response{
                         status_code = 200,
                         message = "修改成功",
-                        data = DiseaseService.GetDiseaseSymptom(Disease.DiseaseId)
+                        data = Clinic
                     });
                 }
                 else{
@@ -192,10 +159,10 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 刪除疾病
+        #region 刪除最新消息
         [HttpDelete]
         [Route("")]
-        public IActionResult DeleteDisease([FromQuery]int DiseaseId){
+        public IActionResult DeleteClinic([FromQuery]int ClinicId){
             try
             {
                 if(User.Identity == null || User.Identity.Name == null){
@@ -210,13 +177,13 @@ namespace DermSight.Controller
                         message = "權限不足"
                     });
                 }
-                if(DiseaseService.Get(DiseaseId)==null){
+                if(ClinicService.Get(ClinicId) == null){
                     return BadRequest(new Response(){
                         status_code = 400,
-                        message = "無該疾病或以刪除"
+                        message = "無該最新消息或以刪除"
                     });
                 }
-                DiseaseService.Delete(DiseaseId);
+                ClinicService.Delete(ClinicId);
                 return Ok(new Response{
                     status_code = 200,
                     message = "成功刪除"

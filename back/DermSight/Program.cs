@@ -53,6 +53,7 @@ builder.Host.ConfigureServices((hostContext,services)=>{
     services.AddScoped<RoleService>();
     services.AddScoped<NewsService>();
     services.AddScoped<DiseaseService>();
+    services.AddScoped<ClinicService>();
 });
 
 
