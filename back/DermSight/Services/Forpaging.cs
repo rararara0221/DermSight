@@ -11,6 +11,11 @@
                 return 10;
             }
         }
+        public int NewsItem{
+            get{
+                return 5;
+            }
+        }
         public Forpaging()
         {
             this.NowPage = 1;
