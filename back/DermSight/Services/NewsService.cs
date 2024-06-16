@@ -34,7 +34,7 @@ namespace DermSight.Services
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
                                 WHERE isDelete = 0
                             )a
-                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
             List<News> data = new(conn.Query<News>(sql));
             return (List<News>)conn.Query<News>(sql);
@@ -48,7 +48,7 @@ namespace DermSight.Services
                         ";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
-            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.NewsItem));
             Forpaging.SetRightPage();
         }
         
@@ -58,7 +58,7 @@ namespace DermSight.Services
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
                                 WHERE title LIKE '%{Search}%' OR content LIKE '%{Search}%' AND isDelete = 0
                             )a
-                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
             List<News> data = new(conn.Query<News>(sql));
             return (List<News>)conn.Query<News>(sql);
@@ -69,7 +69,7 @@ namespace DermSight.Services
             string sql = $@"SELECT COUNT(*) FROM [News] WHERE title LIKE '%{Search}%' OR content LIKE '%{Search}%' AND isDelete = 0";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
-            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.NewsItem));
             Forpaging.SetRightPage();
         }
 
