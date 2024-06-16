@@ -1,0 +1,134 @@
+.search{
+    width: 95%;
+    padding: 5px;
+    border-radius: 25px;
+    border: 1px #6bb0b0 solid ;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search:focus{
+    border: #6bb0b0;
+    box-shadow: #6bb0b0;
+}
+.search i{
+    padding: 10px;
+    font-size: 20px;
+    color: #6bb0b0;
+    outline: none
+}
+.search input{
+    font-size: 16px;
+    width: 90%;
+    border: none;
+    padding: 10px;
+    outline: none;
+    color: #375c5c;
+}
+.search div, .member-insert{
+    font-size: 14px;
+    border: none;
+    padding: 10px 15px;
+    outline: none;
+    border-radius: 25px;
+    background-color: #6bb0b0;
+    color: #fff;
+    cursor: pointer;
+    border: 1px #6bb0b0 solid;
+}
+.search div:hover{
+    background-color: #fff;
+    color: #6bb0b0;
+}
+
+.member{
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #e6e6e6;
+}
+.member-title{
+    color: 4E6460;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 0;
+}
+.member-top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.member-list{
+    margin: 20px 0;
+}
+.member-list table{
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+thead tr th:first-child{
+    border-top-left-radius: 15px;
+}
+tfoot tr:last-child td:first-child{
+    border-bottom-left-radius: 15px;
+}
+thead tr th:last-child{
+    border-top-right-radius: 15px;
+}
+tfoot tr:last-child td:last-child{
+    border-bottom-right-radius: 15px;
+}
+.member-list thead{
+    color: #fefefe;
+    font-weight: bolder;
+    background-color: #6bb0b0;
+}
+.member-list table th, .member-list table td {
+    padding: 15px;
+}
+.member-list table td img{
+    width: 100%;
+    border-radius: 15px;
+}
+.member-list table td a{
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 5px 0px;
+    background-color: #6bb0b0;
+    color: #fff;
+    border: 1px #6bb0b0 solid;
+}
+.member-list table td a:hover{
+    background-color: #ffffff;
+    color: #6bb0b0;
+}
+.member-list table tr td:first-child{
+    width: 100px;
+}
+.member-list table tr td:last-child{
+    text-align: right;
+} 
+.member-list table tfoot tr:hover{
+    background-color: #fff;
+}
+.page ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page ul li a{
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    color: #626262;
+}
+.member-content{
+    width: 64%;
+    height: 425px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #c5dbdb;
+}

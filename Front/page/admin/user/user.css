@@ -241,7 +241,7 @@
     cursor: pointer;
 }
 
-.modal-content .confirm {
+.modal-content .confirm , .modal-content .input input{
     background-color: #6bb0b0;
     color: white;
     padding: 10px 20px;
@@ -252,6 +252,18 @@
     margin-top: 10px;
     display: inline-block;
     font-size: 16px;
+    border: 1px solid #5b8f8f;
+}
+
+.modal-content .input input{
+    background-color: #5b8f8f;
+    border: 1px solid #5b8f8f;
+    color: white;
+}
+.modal-content .input input:hover{
+    border: 1px solid #5b8f8f;
+    color: #5b8f8f;
+    background-color: white;
 }
 
 .modal-content .confirm:hover {
