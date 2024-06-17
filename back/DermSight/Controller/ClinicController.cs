@@ -14,7 +14,7 @@ namespace DermSight.Controller
         readonly ClinicService ClinicService = _ClinicService;
         public UserService UserService = _UserService;
 
-        #region 取得疾病列表
+        #region 取得診所列表
         [HttpGet]
         [Route("AllClinic")]
         public IActionResult GetAllClinicList([FromQuery]string? Search,[FromQuery]int CityId = 0,[FromQuery]int page = 1){
@@ -43,7 +43,7 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 新增疾病
+        #region 新增診所
         [HttpPost]
         [Route("")]
         public IActionResult InsertClinic([FromBody]ClinicInsert Data){
@@ -96,7 +96,7 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 修改最新消息
+        #region 修改診所
         [HttpPut]
         [Route("")]
         public IActionResult UpdateClinic([FromBody]ClinicUpdate Data){
@@ -118,7 +118,7 @@ namespace DermSight.Controller
                     if(ClinicService.Get(Data.ClinicId) == null){
                         return BadRequest(new Response(){
                             status_code = 400,
-                            message = "無該最新消息或以刪除"
+                            message = "無該診所或以刪除"
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;
@@ -159,7 +159,7 @@ namespace DermSight.Controller
         }
         #endregion
 
-        #region 刪除最新消息
+        #region 刪除診所
         [HttpDelete]
         [Route("")]
         public IActionResult DeleteClinic([FromQuery]int ClinicId){
@@ -180,7 +180,7 @@ namespace DermSight.Controller
                 if(ClinicService.Get(ClinicId) == null){
                     return BadRequest(new Response(){
                         status_code = 400,
-                        message = "無該最新消息或以刪除"
+                        message = "無該診所或以刪除"
                     });
                 }
                 ClinicService.Delete(ClinicId);

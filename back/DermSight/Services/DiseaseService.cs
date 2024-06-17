@@ -12,6 +12,7 @@ namespace DermSight.Services
         //資料庫連線字串
         private readonly string? cnstr = configuration.GetConnectionString("ConnectionStrings");
 
+        #region 取得資料
         // 列表
         public List<Disease> GetAllDiseaseList(DiseaseViewModel DiseaseViewModel)
         {
@@ -81,6 +82,7 @@ namespace DermSight.Services
             using var conn = new SqlConnection(cnstr);
             return conn.QueryFirstOrDefault<Disease>(sql);
         }
+
         public DiseaseSymptom GetDiseaseSymptom(int DiseaseId)
         {
             var Dsql = $@"
@@ -98,13 +100,22 @@ namespace DermSight.Services
                             JOIN Symptom s ON s.diseaseId = d.diseaseId
                             WHERE d.diseaseId = @DiseaseId
                         ";
+            var Psql = $@"
+                            SELECT
+                                route
+                            FROM [Photo]
+                            WHERE diseaseId = @DiseaseId
+                        ";
             using var conn = new SqlConnection(cnstr);
             DiseaseSymptom data = new(){
                 Disease = conn.QueryFirstOrDefault<Disease>(Dsql, new{ DiseaseId }),
-                Symptoms = conn.Query<Symptom>(Ssql, new{ DiseaseId }).ToList()
+                Symptoms = conn.Query<Symptom>(Ssql, new{ DiseaseId }).ToList(),
+                Route = conn.QueryFirstOrDefault<string>(Psql, new{ DiseaseId })
             };
             return data;
         }
+        #endregion
+        #region 新增資料
         // 新增資料
         public int Create(Disease Data,List<string> Symptoms)
         {
@@ -123,6 +134,16 @@ namespace DermSight.Services
             using var conn = new SqlConnection(cnstr);
             return conn.QueryFirst<int>(sql, new{Data.Name,Data.Description});
         }
+        public void CreatePhoto(int DiseaseId,string Route){
+            var sql = $@"
+                            INSERT INTO [Photo](diseaseId,route)
+                            VALUES(@DiseaseId,@Route)
+                    ";
+            using var conn = new SqlConnection(cnstr);
+            conn.Execute(sql,new{DiseaseId,Route});
+        }
+        #endregion
+        #region 修改資料
         // 修改資料
         public void Update(Disease Disease,List<string> newSymptoms)
         {
@@ -156,6 +177,15 @@ namespace DermSight.Services
             }
             conn.Execute(sql, Disease); // new { Data.disease, Data.name, Data.Content ,Data.Pin}
         }
+        public void UpdatePhoto(int DiseaseId,string Route){
+            var sql = $@"
+                            UPDATE [Photo] SET route = @Route WHERE diseaseId = @DiseaseId\
+                    ";
+            using var conn = new SqlConnection(cnstr);
+            conn.Execute(sql,new{DiseaseId,Route});
+        }
+        #endregion
+        #region 刪除資料
         // 刪除資料
         public void Delete(int Diseaseid)
         {
@@ -163,5 +193,15 @@ namespace DermSight.Services
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql, new{Diseaseid});
         }
+        #endregion
+        #region 使用者辨識
+        public int SaveIdentificationPhoto(int UserId,string Route){
+            // return RecordId;
+            return 1;
+        }
+        public IdentificationViewModel GetRecord(int UserId,int RecordId){
+            return new();
+        }
+        #endregion
     }
 }

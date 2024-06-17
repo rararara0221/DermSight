@@ -16,5 +16,6 @@ namespace DermSight.ViewModels
     public class DiseaseSymptom{
         public Disease Disease{ get; set; }
         public List<Symptom> Symptoms { get; set; }
+        public required string Route { get; set; }
     }
 }
