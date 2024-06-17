@@ -91,20 +91,21 @@ namespace DermSight.Services
                                 s.content
                             FROM Disease d
                             JOIN Symptom s ON s.diseaseId = d.diseaseId
-                            WHERE d.diseaseId = @DiseaseId
+                            WHERE d.diseaseId = @DiseaseId AND d.isDelete = 0
                         ";
             var Ssql = $@"
                             SELECT
                                 s.*
                             FROM Disease d
                             JOIN Symptom s ON s.diseaseId = d.diseaseId
-                            WHERE d.diseaseId = @DiseaseId
+                            WHERE d.diseaseId = @DiseaseId AND d.isDelete = 0
                         ";
             var Psql = $@"
                             SELECT
                                 route
-                            FROM [Photo]
-                            WHERE diseaseId = @DiseaseId
+                            FROM [Photo] p
+                            JOIN [Disease] d ON d.diseaseId = p.diseaseId
+                            WHERE p.diseaseId = @DiseaseId AND d.isDelete = 0
                         ";
             using var conn = new SqlConnection(cnstr);
             DiseaseSymptom data = new(){
@@ -179,7 +180,7 @@ namespace DermSight.Services
         }
         public void UpdatePhoto(int DiseaseId,string Route){
             var sql = $@"
-                            UPDATE [Photo] SET route = @Route WHERE diseaseId = @DiseaseId\
+                            UPDATE [Photo] SET route = @Route WHERE diseaseId = @DiseaseId
                     ";
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql,new{DiseaseId,Route});

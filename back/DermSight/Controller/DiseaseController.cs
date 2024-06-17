@@ -104,7 +104,7 @@ namespace DermSight.Controller
                         Description = Data.Description
                     };
                     // 取得症狀
-                    List<string> Symptom = Data.Symptom;
+                    List<string> Symptom = Data.Symptoms;
                     Disease.DiseaseId = DiseaseService.Create(Disease, Symptom);
                     // 處理圖片
                     var wwwroot = evn.ContentRootPath + @"\wwwroot\images\Disease\";

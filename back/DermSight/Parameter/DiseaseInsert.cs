@@ -15,7 +15,7 @@ namespace DermSight.Parameter
         public required string Description { get; set; }
         [DisplayName("症狀")]
         [Required(ErrorMessage = "請輸入症狀")]
-        public required List<string> Symptom { get; set;}
+        public required List<string> Symptoms { get; set;}
         [DisplayName("照片")]
         public IFormFile? Photo { get; set; }
     }
