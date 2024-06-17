@@ -31,7 +31,7 @@
     border: 1px solid #6bb0b0;
 }
 .search{
-    width: 98%;
+    width: 100%-padding;
     padding: 5px;
     border-radius: 25px;
     border: 1px #6bb0b0 solid ;
@@ -51,7 +51,7 @@
 }
 .search input{
     font-size: 16px;
-    width: 85%;
+    width: 90%;
     border: none;
     padding: 10px;
     outline: none;
@@ -73,7 +73,7 @@
     color: #6bb0b0;
 }
 .data{
-    width: 74%;
+    width: 100%;
     padding: 25px;
     border: 1px #6bb0b0 solid;
     border-radius: 25px;

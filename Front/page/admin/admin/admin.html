@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DermSight - 診斷紀錄</title>
-    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="../../../css/index.css">
     <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +24,26 @@
             <ul>
                 <li>
                     <a href="../index/index.html">
-                        <i class="fa-solid fa-house"></i>
-                        首頁
+                        <i class="fa-solid fa-calendar-days"></i>
+                        最近活動
+                    </a>
+                </li>
+                <li>
+                    <a href="../membership/membership.html">
+                        <i class="fa-solid fa-user"></i>
+                        會員管理
+                    </a>
+                </li>
+                <li>
+                    <a href="../news/news.html">
+                        <i class="fa-solid fa-newspaper"></i>
+                        最新消息
                     </a>
                 </li>
                 <li>
                     <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病徵
+                        皮膚病癥
                     </a>
                 </li>
                 <li>
@@ -49,9 +61,9 @@
             </ul>
         </div>
         <div class="header-right">
-            <a href="../user/user.html" >
+            <a href="../admin/admin.html" >
                 <i class="fa-solid fa-circle-user"></i>
-                小皮
+                Admin
             </a>
         </div>
     </header>
@@ -62,24 +74,27 @@
                 <img src="../../../img/user.png">
             </div>
             <div class="user-title">
-                小皮
+                Admin1
             </div>
             <div class="user-data">
-                wangxiaopi@gmail.com
+                dermsightadmin01@gmail.com
             </div>
             <div class="user-btn">
                 <a href="#" class="user-update" id="openModalBtnEdit">
-                    修改權限
+                    編輯
                 </a>
-                <a href="#" class="user-suspension">
-                    停權
+                <a href="#" class="user-update" id="openModalBtnPwd">
+                    修改密碼
+                </a>
+                <a href="#" class="user-logout">
+                    登出
                 </a>
             </div>
         </section>
         
         <section class="record">
             <div class="record-title">
-                診斷紀錄
+                最近活動
             </div>
             <div class="search">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -89,7 +104,9 @@
             <div class="record-description">
                 <ul>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            最新消息
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -100,7 +117,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            皮膚病癥
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -111,7 +130,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            最新消息
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -122,7 +143,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            皮膚病癥
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -133,7 +156,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            最新消息
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -144,7 +169,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            皮膚病癥
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -155,7 +182,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            最新消息
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -166,7 +195,9 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            皮膚病癥
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎
@@ -177,7 +208,22 @@
                         </div>
                     </li>
                     <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
+                        <div class="record-type">
+                            最新消息
+                        </div>
+                        <div class="record-content">
+                            <p class="record-diseasename">
+                                接觸性皮膚炎
+                            </p>
+                            <p class="record-date">
+                                2024/06/10
+                            </p>
+                        </div>
+                    </li>
+                    <li class="record-disease">
+                        <div class="record-type">
+                            皮膚病癥
+                        </div>
                         <div class="record-content">
                             <p class="record-diseasename">
                                 接觸性皮膚炎

@@ -119,27 +119,22 @@
 }
 .record-description ul li{
     margin: 5px;
-    display: flex;
-    align-items:flex-start;
-    justify-content:flex-start;
-}
-.record-description ul li img{
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 15px;
 }
 .record-disease{
-    display: flex;
     width: 45%;
     font-size: 20px;
     border: 1px #6bb0b0 solid;
     padding: 15px;
     border-radius: 15px;
 }
-.record-diseasename{
-    margin-top: 10px;
+.record-type{
+    border-radius: 15px;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    background-color: #5b8f8f;
 }
+
 .page ul{
     list-style-type: none;
     display: flex;
@@ -169,11 +164,15 @@
 .record-description{
     color: #626262;
     margin-top: 10px;
-    text-indent: 2em;
     line-height: 30px;
     text-align: justify;
 }
-
+.record-content{
+    padding: 0 10px;
+}
+.record-date{
+    font-size: 14px;
+}
 .direction{
     margin: 50px 0;
     padding: 20px;
