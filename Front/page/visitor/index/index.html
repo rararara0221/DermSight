@@ -31,7 +31,7 @@
                 <li>
                     <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病癥
+                        皮膚病徵
                     </a>
                 </li>
                 <li>
@@ -59,86 +59,40 @@
                 職業病相關訊息
             </div>
             <div class="news-list">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <p>最新消息最新消息最新消息</p>
-                            <p>2024.06.04</p>
-                        </a>
-                    </li>
-                </ul>
+                <ul id="news-container"></ul>
             </div>
-            <div class="page">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            2
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            3
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
-                    </li>
+            <div class="pagination">
+                <ul id="pagination">
+                    <li><a href="#" class="page-link" data-page="prev"><i class="fa-solid fa-chevron-left"></i></a></li>
+                    <li><a href="#" class="page-link" data-page="next"><i class="fa-solid fa-chevron-right"></i></a></li>
                 </ul>
             </div>
         </section>
         
         <section class="column">
-            <div>
                 <div class="column-title">
                     <img src="../../../img/DermSight_green.png" />
                 </div>
                 <div class="column-description">
-                    為了改善職業性皮膚病狀況，因此DermSight團隊開發皮膚檢測系統，透過整合相關的皮膚病醫療知識，使用者在得知皮膚病癥類別時，能夠即時了解相關的醫療資訊，這些資訊會被儲存在診斷結果中，讓使用者能夠根據治療方法，如藥物塗抹等，緩解自身的病癥症狀。基於上述，本研究開發專為流水線工人打造的皮膚檢測系統，透過手機攝像頭影像辨識病癥，結合系統功能內資源，讓使用者能夠在本系統獲得皮膚病相關醫療知識和醫療資源，以有效預防職業性皮膚病的發生。
+                    DermSight 是一款智能皮膚檢測系統，透過手機攝像頭和影像辨識技術，即時識別皮膚病症狀，提供個性化治療建議和醫療資源，助您預防和管理職業性皮膚病。
                 </div>
-            </div>
-            <img src="../../../img/Hand.png" />
+                <div class="column-description column-small">
+                    <ul>
+                        <li>
+                            AI影像辨識
+                        </li>
+                        <li>
+                            個人化醫療建議
+                        </li>
+                        <li>
+                            豐富的醫療資源
+                        </li>
+                        <li>
+                            使用便捷、界面友好
+                        </li>
+                    </ul>
+                    <img src="../../../img/Hand.png" />
+                </div>
         </section>
     </section>
     <!-- 使用說明 -->
@@ -181,5 +135,15 @@
     <footer>
         Copyright © 2024 DermSight All rights reserved.
     </footer>
+
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">标题</h3>
+            <p id="modalContent">内容</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

@@ -102,7 +102,7 @@ namespace DermSight.Controller
                     status_code = 200,
                 });
             else
-                return Ok(new Response(){
+                return BadRequest(new Response(){
                     message = "請重新確認或重新註冊",
                     status_code = 400,
                 });
@@ -111,15 +111,15 @@ namespace DermSight.Controller
         #region 登入
         // 登入
         [HttpPost("[Action]")]
-        public IActionResult Login([FromBody]UserLogin User)
+        public IActionResult Login([FromForm]UserLogin User)
         {
             string ValidateStr = UserService.LoginCheck(User.Account, User.Password);
-            if (!string.IsNullOrWhiteSpace(ValidateStr)){
+            if (!string.IsNullOrWhiteSpace(ValidateStr) || UserService.GetDataByAccount(User.Account) == null){
                 Response result = new(){
                     message = ValidateStr,
                     status_code = 400
                 };
-                return Ok(result);
+                return BadRequest(result);
             }
             else
             {
@@ -244,7 +244,7 @@ namespace DermSight.Controller
         // 輸入Email後寄驗證信
         [HttpPost]
         [Route("[Action]")]
-        public IActionResult ForgetPassword([FromBody]ForgetPassword Email)
+        public IActionResult ForgetPassword([FromForm]ForgetPassword Email)
         {
             // 看有沒有Email的資料
             User Data = UserService.GetDataByMail(Email.Mail);
@@ -275,7 +275,7 @@ namespace DermSight.Controller
         // 檢查驗證碼
         [HttpPost]
         [Route("[Action]")]
-        public IActionResult CheckForgetPasswordCode([FromBody]CheckForgetPasswordAuthCode Data)
+        public IActionResult CheckForgetPasswordCode([FromForm]CheckForgetPasswordAuthCode Data)
         {
             // 取得此Email的會員資訊
             User user = UserService.GetDataByMail(Data.Mail);
@@ -285,19 +285,19 @@ namespace DermSight.Controller
                 RoleService.SetMemberRole_ForgetPassword(user.userId);
                 int Role = UserService.GetRole(user.Account);
                 var jwt = JwtHelpers.GenerateToken(user.Account, Role);
-                Response result = new()
+                
+                // 回傳成功
+                return Ok(new Response()
                 {
                     message = "驗證成功",
                     status_code = 200,
                     data = jwt
-                };
-                // 回傳成功
-                return Ok(result);
+                });
             }
             else
             {
                 // 回傳失敗
-                return Ok(new Response()
+                return BadRequest(new Response()
                 {
                     message = "驗證碼錯誤",
                     status_code = 400
@@ -309,14 +309,18 @@ namespace DermSight.Controller
         [HttpPost]
         [Route("ChangePasswordByForget")]
         // [Authorize(Roles = "ForgetPassword")]
-        public IActionResult ChangePassword([FromBody]CheckForgetPassword Data)
+        public IActionResult ChangePassword([FromForm]CheckForgetPassword Data)
         {
             // 取得此Email的會員資訊
             if (User.IsInRole("ForgetPassword"))
             {
                 User user = UserService.GetDataByMail(Data.Mail);
                 if(User.Identity == null || User.Identity.Name != user.Account || user == null)
-                    return BadRequest(new Response(){status_code = 400, message = "電子郵件不符，請重新輸入"});
+                    return BadRequest(new Response(){
+                        status_code = 400,
+                        message = "電子郵件不符，請重新輸入"
+                    });
+
                 UserService.ClearAuthCode(Data.Mail);
                 UserService.ChangePasswordByForget(Data);
                 return Ok(new Response(){

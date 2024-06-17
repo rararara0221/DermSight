@@ -28,24 +28,35 @@
                 <button id="register-btn" onclick="showRegister()">註冊</button>
             </div>
             <form id="login-form">
-                <input type="text" placeholder="Account" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">登入</button>
+                <input type="text" placeholder="Account" name="Account" required required autocomplete="account">
+                <input type="password" placeholder="Password" name="Password" required autocomplete="password">
+                <button type="submit" onclick="login(event)">登入</button>
                 <a href="#" onclick="showForget()">忘記密碼？</a>
             </form>
+
             <form id="register-form">
-                
-                <input type="text" placeholder="Username" required>
-                <input type="text" placeholder="Account" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Check Password" required>
-                <input type="email" placeholder="Email" required>
-                <button type="submit">註冊</button>
+                <input type="text" name="Name" placeholder="Name" required autocomplete="name">
+                <input type="text" name="Account" placeholder="Account" required autocomplete="account">
+                <input type="password" name="Password" placeholder="Password" required autocomplete="password">
+                <input type="password" name="PasswordCheck" placeholder="Password Check" required autocomplete="new-password">
+                <input type="email" name="Mail" placeholder="Mail" required autocomplete="email">
+                <button type="submit" onclick="register(event)">註冊</button>
             </form>
 
             <form id="forget-form">
-                <input type="email" placeholder="Email" required>
-                <button type="submit">寄驗證信</button>
+                <input type="email" name="Mail" placeholder="Mail" required autocomplete="email">
+                <button type="submit" onclick="forget(event)">寄驗證信</button>
+            </form>
+
+            <form id="forget-authcode-form">
+                <input type="text" name="AuthCode" placeholder="AuthCode" required autocomplete="authCode">
+                <button type="submit" onclick="forget_authcode(event)">確認</button>
+            </form>
+
+            <form id="forget-changepassword-form">
+                <input type="password" name="NewPassword" placeholder="Password" required autocomplete="password">
+                <input type="password" name="CheckNewPassword" placeholder="Password Check" required autocomplete="new-password">
+                <button type="submit" onclick="forget_changepassword(event)">確認</button>
             </form>
         </div>
     </div>
@@ -53,34 +64,6 @@
     <footer>
         Copyright © 2024 DermSight All rights reserved.
     </footer>
-    <script>
-        function showLogin() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('forget-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('login-btn').classList.add('active');
-            document.getElementById('register-btn').classList.remove('active');
-            document.getElementById('forget-btn').classList.remove('active');
-        }
-
-        function showRegister() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-            document.getElementById('forget-form').style.display = 'none';
-            document.getElementById('register-btn').classList.add('active');
-            document.getElementById('login-btn').classList.remove('active');
-            document.getElementById('forget-btn').classList.remove('active');
-        }
-
-        function showForget() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('forget-form').style.display = 'block';
-            document.getElementById('login-btn').classList.remove('active');
-            document.getElementById('register-btn').classList.remove('active');
-        }
-
-        showLogin();
-    </script>
+    <script src="verify.js"></script>
 </body>
 </html>
