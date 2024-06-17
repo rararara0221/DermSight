@@ -195,14 +195,6 @@ namespace DermSight.Services
             conn.Execute(sql, new{Diseaseid});
         }
         #endregion
-        #region 使用者辨識
-        public int SaveIdentificationPhoto(int UserId,string Route){
-            // return RecordId;
-            return 1;
-        }
-        public IdentificationViewModel GetRecord(int UserId,int RecordId){
-            return new();
-        }
-        #endregion
+        
     }
 }

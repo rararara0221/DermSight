@@ -34,7 +34,7 @@ namespace DermSight.Controller
                         message = validatestr
                     });
                 }
-                var wwwroot = evn.ContentRootPath + @"\wwwroot\images\User\";
+                var wwwroot = @"..\..\back\DermSight\wwwroot\images\User\";
                 User User = new()
                 {
                     Name = RegisterData.Name,
@@ -151,7 +151,7 @@ namespace DermSight.Controller
                     Name = Data.Name
                 };
                 //處理圖片
-                var wwwroot = evn.ContentRootPath + @"\wwwroot\images\User\";
+                var wwwroot = @"..\..\back\DermSight\wwwroot\images\User\";
                 if(Data.file != null){
                     var imgname = User.Identity.Name + ".jpg";
                     var img_path = wwwroot + imgname;

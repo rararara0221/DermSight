@@ -107,7 +107,7 @@ namespace DermSight.Controller
                     List<string> Symptom = Data.Symptoms;
                     Disease.DiseaseId = DiseaseService.Create(Disease, Symptom);
                     // 處理圖片
-                    var wwwroot = evn.ContentRootPath + @"\wwwroot\images\Disease\";
+                    var wwwroot = @"..\..\back\DermSight\wwwroot\images\User\";
                     string Route;
                     if(Data.Photo != null ){
                         var imgname = Disease.DiseaseId + ".jpg";
@@ -182,7 +182,7 @@ namespace DermSight.Controller
                         Description = Data.Description
                     };
                     // 處理圖片
-                    var wwwroot = evn.ContentRootPath + @"\wwwroot\images\Disease\";
+                    var wwwroot = @"..\..\back\DermSight\wwwroot\images\User\";
                     string Route;
                     if(Data.Photo != null ){
                         var imgname = Disease.DiseaseId + ".jpg";
@@ -260,87 +260,6 @@ namespace DermSight.Controller
                 return BadRequest(new Response{
                     status_code = 400,
                     message = e.Message
-                });
-            }
-        }
-        #endregion
-        #region 使用者辨識
-        [HttpPost]
-        [Route("Identification")]
-        public IActionResult Identification([FromBody]IFormFile Photo){
-            try
-            {
-                if(User.Identity == null || User.Identity.Name == null){
-                    return BadRequest(new Response{
-                        status_code = 400,
-                        message = "請先登入"
-                    });
-                }
-                User user = UserService.GetDataByAccount(User.Identity.Name);
-                // 日後呼叫辨識模型處理後
-                // 儲存結果並回傳結果
-                // var response = IdentificationModel( user.userId, Photo );
-                // string Route;
-                // int RecordId;
-                // if(response){
-                //     RecordId = DiseaseService.SaveIdentificationPhoto(response.Photo); // return RecordId
-                //     var wwwroot = evn.ContentRootPath + @"\wwwroot\images\Record\" + user.userId;
-                //     var imgname = RecordId + ".jpg";
-                //     var img_path = wwwroot + imgname;
-                //     using var stream = System.IO.File.Create(img_path);
-                //     response.Photo.CopyTo(stream);
-                //     Route = img_path;
-                // }
-                // else{
-                //         return BadRequest(new Response{
-                //             status_code = 400,
-                //             message = "錯誤訊息"
-                //         });
-                // }
-                // return Ok(new Response{
-                //     status_code = 200,
-                //     message = "辨識完成",
-                //     data = DiseaseService.GetRecord(user.userId,RecordId)
-                // });
-                return Ok(new Response{
-                    status_code = 200,
-                    message = "辨識完成"
-                });
-            }
-            catch (Exception e){
-                return BadRequest(new Response{
-                    status_code = 400,
-                    message = e.Message
-                });
-            }
-        }
-        
-        // 刪除紀錄
-        [HttpDelete]
-        [Route("Identification")]
-        public IActionResult DeleteRecord([FromQuery]int RecordId){
-            try
-            {
-                // 刪除
-                if(User.Identity == null || User.Identity.Name == null){
-                    return BadRequest(new Response{
-                        status_code = 400,
-                        message = "請先登入"
-                    });
-                }
-                User user = UserService.GetDataByAccount(User.Identity.Name);
-                // DiseaseService.DeleteRecord(user.userId,RecordId);
-                return Ok(new Response{
-                    status_code = 200,
-                    message = "刪除成功",
-                    data = user
-                });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new Response{
-                    status_code = 400,
-                    message = e.Message,
                 });
             }
         }
