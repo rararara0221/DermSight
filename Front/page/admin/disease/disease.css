@@ -109,7 +109,7 @@ tfoot tr:last-child td:last-child{
     text-align: center;
 }
 .news-list table tr td:nth-child(2){
-    width: 70%;
+    width: 40%;
     text-align: left;
 }  
 .news-list table tr td:last-child{

@@ -30,6 +30,9 @@ $(document).ready(function() {
                         ${disease.description}
                     </td>
                     <td>
+                        ${disease.description}
+                    </td>
+                    <td>
                         <a href="../disease-data/disease-data.html?id=${disease.diseaseId}">修改</a>
                         <a href="#" onclick="deletedisease(${disease.diseaseId})">刪除</a>
                     </td>
@@ -159,7 +162,7 @@ $(document).ready(function() {
 });
 
 function deletedisease(diseaseId) {
-    if (confirm('確定要刪除這條最新消息嗎？')) {
+    if (confirm('確定要刪除這條皮膚病癥資訊嗎？')) {
         fetch(`http://localhost:5100/DermSight/disease?diseaseId=${diseaseId}`, {
             method: 'DELETE',
             headers: {

@@ -67,11 +67,13 @@
     <div class="container">
         <div class="form-container">
             <div class="form-btn">
-                <button id="clinic-btn">診所資訊</button>
+                <button id="clinic-btn"></button>
             </div>
             <form id="clinic-form">
-                <input type="text" placeholder="診所名稱" name="name" required>
-                <input type="text" placeholder="地址" name="address" required>
+                <input type="text" name="title" placeholder="標題" required>
+                <input type="text" placeholder="診所名稱" name="name" required id="title" >
+                <input type="text" placeholder="診所名稱" name="name" required id="phone" >
+                <input type="text" placeholder="地址" name="address" required id="address" >
                 <button type="submit">確認</button>
             </form>
         </div>

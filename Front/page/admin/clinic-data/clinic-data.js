@@ -76,4 +76,67 @@ $(document).ready(function() {
         clinic(event);
     });
     
+    $('#edit-clinic-form').on('submit', function(event) {
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const clinicId = urlParams.get('id');
+        event.preventDefault();
+    
+        const formData = new FormData(this);
+    
+        const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
+        formData.set('isPin', isPinValue);
+        formData.set('clinicId', clinicId);    
+    
+        fetch(`http://localhost:5100/DermSight/clinic`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                alert('修改成功！');
+                window.location.href = '../clinic/clinic.html'; // Redirect back to clinic list
+            } else {
+                alert('修改失敗！');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating clinic');
+        });
+    });
+});
+
+$(document).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const clinicId = urlParams.get('id');
+
+    // Fetch clinic data based on ID
+    if (clinicId) {
+        fetch(`http://localhost:5100/DermSight/clinic?clinicId=${clinicId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                const clinic = data.data;
+                $('#title').val(clinic.title);
+                $('#phone').val(clinic.phone);
+                $('#address').val(clinic.address);
+            } else {
+                alert('Error fetching clinic data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch clinic data');
+        });
+    }
 });
