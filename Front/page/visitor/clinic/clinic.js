@@ -159,7 +159,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     function checkLoginStatus() {
         const userInfoContainer = $('#user-info');
-        const accessToken = localStorage.getItem('accesstoken');
+        const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
             // 使用accessToken获取用户名等用户信息

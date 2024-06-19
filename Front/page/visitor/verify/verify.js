@@ -109,10 +109,10 @@ async function login(event) {
 
         const result = await response.json();
         if (response.ok) {
-            localStorage.setItem('accessToken', result.data); // 假设返回的数据中有 accessToken
+            localStorage.setItem('accessToken', result.data.token); // 假设返回的数据中有 accessToken
             alert(result.message);
 
-            if (result.data.permission === '4') {
+            if (result.data.role === '4') {
                 window.location.href = '../admin/index.html';
             } else if (result.data.permission === '1') {
                 window.location.href = '../index/index.html';
@@ -147,7 +147,7 @@ async function forget(event) {
         console.log('Response:', result);
 
         if (response.ok) {
-            localStorage.setItem('accesstoken',result.data);
+            localStorage.setItem('accessToken',result.data);
             alert("驗證成功！請收信。");
             showForgetAuthcode();
         } else {
@@ -178,7 +178,7 @@ async function forget_authcode(event) {
         const result = await response.json();
         
         if (response.ok) {
-            localStorage.setItem('accesstoken',result.data)
+            localStorage.setItem('accessToken',result.data)
             alert("驗證成功！請輸入新密碼！");
             showForgetChangepassword();
         } else {
@@ -202,7 +202,7 @@ async function forget_changepassword(event) {
     formData.append('Mail', mail); // 将邮箱地址添加到 FormData 对象中
 
     try {
-        const token = localStorage.getItem('accesstoken');
+        const token = localStorage.getItem('accessToken');
 
         const response = await fetch("http://localhost:5100/DermSight/User/ChangePasswordByForget", {
             method: 'POST',

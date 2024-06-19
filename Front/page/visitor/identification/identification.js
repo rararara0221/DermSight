@@ -2,7 +2,7 @@ $(document).ready(function() {
     // 使用者登入註冊
     function checkLoginStatus() {
         const userInfoContainer = $('#user-info');
-        const accessToken = localStorage.getItem('accesstoken');
+        const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
             fetch("http://localhost:5100/DermSight/User/MySelf", {
@@ -59,7 +59,7 @@ $(document).ready(function() {
     // 上傳檔案
     document.getElementById('upload').addEventListener('click', function() {
         var fileInput = document.getElementById('imageUpload');
-        const accessToken = localStorage.getItem('accesstoken');
+        const accessToken = localStorage.getItem('accessToken');
         var file = fileInput.files[0];
     
         if (!file) {

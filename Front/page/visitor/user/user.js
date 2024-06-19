@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     // 获取用户信息
     function getUserInfo() {
-        const accessToken = localStorage.getItem("accesstoken");
+        const accessToken = localStorage.getItem("accessToken");
 
         if (!accessToken) {
             userInfoContainer.html(`<a href="../verify/verify.html">
@@ -97,14 +97,14 @@ $(document).ready(function () {
         });
 
         $("#logout-btn").on("click", function () {
-            localStorage.removeItem("accesstoken");
+            localStorage.removeItem("accessToken");
             location.reload();
         });
 
         $("#edit-form").on("submit", function (event) {
             event.preventDefault();
             const formData = $(this).serialize();
-            const accessToken = localStorage.getItem("accesstoken");
+            const accessToken = localStorage.getItem("accessToken");
 
             $.ajax({
                 url: "http://localhost:5100/DermSight/User/Edit",
@@ -128,7 +128,7 @@ $(document).ready(function () {
         $("#pwd-form").on("submit", function (event) {
             event.preventDefault();
             const formData = $(this).serialize();
-            const accessToken = localStorage.getItem("accesstoken");
+            const accessToken = localStorage.getItem("accessToken");
 
             $.ajax({
                 url: "http://localhost:5100/DermSight/User/ChangePassword",
