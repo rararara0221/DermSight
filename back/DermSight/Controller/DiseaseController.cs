@@ -104,7 +104,7 @@ namespace DermSight.Controller
                         Description = Data.Description
                     };
                     // 取得症狀
-                    List<string> Symptom = Data.Symptoms;
+                    List<string> Symptom = [.. Data.Symptoms.Split(',')];
                     Disease.DiseaseId = DiseaseService.Create(Disease, Symptom);
                     // 處理圖片
                     var wwwroot = @"..\..\back\DermSight\wwwroot\images\User\";

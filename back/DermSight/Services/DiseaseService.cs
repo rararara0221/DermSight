@@ -32,8 +32,10 @@ namespace DermSight.Services
         private List<Disease> GetDiseaseList(Forpaging forpaging)
         {
             string sql = $@"SELECT * FROM (
-                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,* FROM [Disease] n
-                                WHERE isDelete = 0
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,n.diseaseId,n.name,n.description,n.time FROM [Disease] n
+                                JOIN [Symptom] s ON s.diseaseId = n.diseaseId
+                                WHERE n.isDelete = 0
+                                GROUP BY n.diseaseId,n.name,n.description,n.time
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
@@ -44,8 +46,12 @@ namespace DermSight.Services
         private void SetMaxPage(Forpaging Forpaging)
         {
             string sql = $@"
-                            SELECT COUNT(*) FROM [Disease]
-                            WHERE isDelete = 0
+                            SELECT COUNT(*) FROM (
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,n.diseaseId,n.name,n.description,n.time FROM [Disease] n
+                                JOIN [Symptom] s ON s.diseaseId = n.diseaseId
+                                WHERE n.isDelete = 0
+                                GROUP BY n.diseaseId,n.name,n.description,n.time
+                            )a
                         ";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
@@ -56,8 +62,10 @@ namespace DermSight.Services
         private List<Disease> GetDiseaseList(string Search,Forpaging forpaging)
         {
             string sql = $@"SELECT * FROM (
-                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,* FROM [Disease] n
-                                WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND isDelete = 0
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,n.diseaseId,n.name,n.description,n.time FROM [Disease] n
+                                JOIN [Symptom] s ON s.diseaseId = n.diseaseId
+                                WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND n.isDelete = 0
+                                GROUP BY n.diseaseId,n.name,n.description,n.time
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
@@ -67,7 +75,14 @@ namespace DermSight.Services
 
         private void SetMaxPage(string Search, Forpaging Forpaging)
         {
-            string sql = $@"SELECT COUNT(*) FROM [Disease] WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND isDelete = 0";
+            string sql = $@"
+                            SELECT COUNT(*) FROM (
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,n.diseaseId,n.name,n.description,n.time FROM [Disease] n
+                                JOIN [Symptom] s ON s.diseaseId = n.diseaseId
+                                WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND n.isDelete = 0
+                                GROUP BY n.diseaseId,n.name,n.description,n.time
+                            )a
+                        ";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
             Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.NewsItem));
