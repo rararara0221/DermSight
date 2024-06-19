@@ -43,6 +43,29 @@ namespace DermSight.Controller
         }
         #endregion
 
+        #region 取得診所
+        [HttpGet]
+        [Route("")]
+        public IActionResult GetClinic([FromQuery]int clinicId){
+            try
+            {
+                Clinic data = ClinicService.Get(clinicId);
+                return Ok(new Response(){
+                    status_code = 200,
+                    message = "讀取成功",
+                    data = data
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response{
+                    status_code = 400,
+                    message = e.Message
+                });
+            }
+        }
+        #endregion
+
         #region 取得縣市列表
         [HttpGet]
         [Route("AllCity")]
@@ -116,7 +139,7 @@ namespace DermSight.Controller
         #region 修改診所
         [HttpPut]
         [Route("")]
-        public IActionResult UpdateClinic([FromBody]ClinicUpdate Data){
+        public IActionResult UpdateClinic([FromForm]ClinicUpdate Data){
             try
             {
                 if(ModelState.IsValid){
@@ -126,12 +149,12 @@ namespace DermSight.Controller
                             message = "請先登入"
                         });
                     }
-                    else if(!User.IsInRole("Admin")){
-                        return BadRequest(new Response{
-                            status_code = 400,
-                            message = "權限不足"
-                        });
-                    }
+                    // else if(!User.IsInRole("Admin")){
+                    //     return BadRequest(new Response{
+                    //         status_code = 400,
+                    //         message = "權限不足"
+                    //     });
+                    // }
                     if(ClinicService.Get(Data.ClinicId) == null){
                         return BadRequest(new Response(){
                             status_code = 400,
@@ -143,7 +166,8 @@ namespace DermSight.Controller
                         ClinicId = Data.ClinicId,
                         CityId = Data.CityId,
                         Name = Data.Name,
-                        Address = Data.Address
+                        Address = Data.Address,
+                        Phone = Data.Phone
                     };
                     ClinicService.Update(Clinic);
                     Clinic = ClinicService.Get(Clinic.ClinicId);

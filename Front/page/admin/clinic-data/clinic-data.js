@@ -83,10 +83,8 @@ $(document).ready(function() {
         event.preventDefault();
     
         const formData = new FormData(this);
-    
-        const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
-        formData.set('isPin', isPinValue);
-        formData.set('clinicId', clinicId);    
+
+        formData.set('ClinicId', clinicId);    
     
         fetch(`http://localhost:5100/DermSight/clinic`, {
             method: 'PUT',
@@ -117,7 +115,7 @@ $(document).ready(function() {
 
     // Fetch clinic data based on ID
     if (clinicId) {
-        fetch(`http://localhost:5100/DermSight/clinic?clinicId=${clinicId}`, {
+        fetch(`http://localhost:5100/DermSight/Clinic?clinicId=${clinicId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -127,7 +125,7 @@ $(document).ready(function() {
         .then(data => {
             if (data.status_code === 200) {
                 const clinic = data.data;
-                $('#title').val(clinic.title);
+                $('#title').val(clinic.name);
                 $('#phone').val(clinic.phone);
                 $('#address').val(clinic.address);
             } else {
@@ -138,5 +136,33 @@ $(document).ready(function() {
             console.error('Error:', error);
             alert('Failed to fetch clinic data');
         });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', async function() {
+    const citySelect = document.getElementById('city');
+
+    try {
+        const response = await fetch('http://localhost:5100/DermSight/Clinic/AllCity');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+
+        // Check if the response has the expected structure
+        if (result.status_code === 200 && Array.isArray(result.data)) {
+            result.data.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.cityId;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
+        } else {
+            console.error('Invalid data format: expected an array in data property');
+            alert('Failed to fetch cities. Please try again later.');
+        }
+    } catch (error) {
+        console.error('Error fetching cities:', error);
+        alert('Failed to fetch cities. Please try again later.');
     }
 });

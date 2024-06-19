@@ -21,5 +21,8 @@ namespace DermSight.Parameter
         [DisplayName("地址")]
         [Required(ErrorMessage = "請輸入地址")]
         public required string Address { get; set; }
+        [DisplayName("電話")]
+        [Required(ErrorMessage = "請輸入電話")]
+        public string Phone { get; set; }
     }
 }
