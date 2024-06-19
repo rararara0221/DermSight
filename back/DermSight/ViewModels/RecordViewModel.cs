@@ -14,5 +14,6 @@ namespace DermSight.ViewModels
     public class RecordData{
         public DiseaseRecord Record { get; set; }
         public RecordPhoto RecordPhoto { get; set; }
+        public string DiseaseName { get; set; }
     }
 }
