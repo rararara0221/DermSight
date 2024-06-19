@@ -30,9 +30,6 @@ $(document).ready(function() {
                         ${disease.description}
                     </td>
                     <td>
-                        ${disease.description}
-                    </td>
-                    <td>
                         <a href="../disease-data/disease-data.html?id=${disease.diseaseId}">修改</a>
                         <a href="#" onclick="deletedisease(${disease.diseaseId})">刪除</a>
                     </td>

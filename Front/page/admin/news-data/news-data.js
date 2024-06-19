@@ -2,11 +2,11 @@ $(document).ready(function() {
     function news(event) {
         event.preventDefault();
 
-        const form = document.getElementById('news-form');
+        const form = document.getElementById('edit-news-form');
         const data = new FormData(form);
         const token = localStorage.getItem('accessToken');
 
-        const isPinValue = data.get('isPin') === 'true' ? 'true' : 'false';
+        const isPinValue = data.get('isPin') === 'true' ? true : false;
             data.set('isPin', isPinValue);
 
         fetch('http://localhost:5100/DermSight/News', {
@@ -83,34 +83,39 @@ $(document).ready(function() {
         
         const urlParams = new URLSearchParams(window.location.search);
         const newsId = urlParams.get('id');
-        event.preventDefault();
-    
-        const formData = new FormData(this);
-    
-        const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
-        formData.set('isPin', isPinValue);
-        formData.set('newsId', newsId);    
-    
-        fetch(`http://localhost:5100/DermSight/News`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status_code === 200) {
-                alert('修改成功！');
-                window.location.href = '../news/news.html'; // Redirect back to news list
-            } else {
-                alert('修改失敗！');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error updating news');
-        });
+        if(newsId===null){
+            news(event);
+        }
+        else{
+            event.preventDefault();
+        
+            const formData = new FormData(this);
+        
+            const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
+            formData.set('isPin', isPinValue);
+            formData.set('newsId', newsId);    
+        
+            fetch(`http://localhost:5100/DermSight/News`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status_code === 200) {
+                    alert('修改成功！');
+                    window.location.href = '../news/news.html'; // Redirect back to news list
+                } else {
+                    alert('修改失敗！');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating news');
+            });
+        }
     });
 });
 

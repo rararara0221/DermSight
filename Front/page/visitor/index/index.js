@@ -5,17 +5,34 @@ $(document).ready(function() {
         newsContainer.empty(); // 清空之前的内容
 
         newsData.forEach(news => {
-            const newsElement = $(`
-                <li>
-                    <a href="#" class="openModalBtnNews" data-type="${news.type}" data-title="${news.title}" data-content="${news.content}">
-                        <div class="news-content">
-                            <p class="new-type">${news.type}</p>
-                            <p>${news.title}</p>
-                        </div>
-                        <p>${new Date(news.time).toLocaleDateString()}</p>
-                    </a>
-                </li>
-            `);
+            var newsElement = "";
+            if(news.isPin===true){
+                newsElement = $(`
+                    <li>
+                        <a href="#" class="openModalBtnNews" data-type="${news.type}" data-title="${news.title}" data-content="${news.content}">
+                            <div class="news-content">
+                                <i class="fa-solid fa-thumbtack" style="padding-right:10px"></i>
+                                <p class="new-type">${news.type}</p>
+                                <p>${news.title}</p>
+                            </div>
+                            <p>${new Date(news.time).toLocaleDateString()}</p>
+                        </a>
+                    </li>
+                `);
+            }
+            else{
+                newsElement = $(`
+                    <li>
+                        <a href="#" class="openModalBtnNews" data-type="${news.type}" data-title="${news.title}" data-content="${news.content}">
+                            <div class="news-content">
+                                <p class="new-type">${news.type}</p>
+                                <p>${news.title}</p>
+                            </div>
+                            <p>${new Date(news.time).toLocaleDateString()}</p>
+                        </a>
+                    </li>
+                `);
+            }
 
             newsContainer.append(newsElement);
         });

@@ -88,34 +88,58 @@ $(document).ready(function() {
         
         const urlParams = new URLSearchParams(window.location.search);
         const diseaseId = urlParams.get('id');
+        
         event.preventDefault();
-    
         const formData = new FormData(this);
-    
-        const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
-        formData.set('isPin', isPinValue);
-        formData.set('diseaseId', diseaseId);    
-    
-        fetch(`http://localhost:5100/DermSight/disease`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status_code === 200) {
-                alert('修改成功！');
-                window.location.href = '../disease/disease.html'; // Redirect back to disease list
-            } else {
-                alert('修改失敗！');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error updating disease');
-        });
+
+        if(diseaseId !== null){
+            formData.set('diseaseId', diseaseId);    
+        
+            fetch(`http://localhost:5100/DermSight/disease`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status_code === 200) {
+                    alert('修改成功！');
+                    window.location.href = '../disease/disease.html'; // Redirect back to disease list
+                } else {
+                    alert('修改失敗！');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating disease');
+            });
+        }
+        // 沒有抓到Id則新增
+        else{
+            // formData.set("symptoms",formData.get("symptoms").split(','))
+            fetch(`http://localhost:5100/DermSight/disease`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status_code === 200) {
+                    alert('新增成功！');
+                    window.location.href = '../disease/disease.html'; // Redirect back to disease list
+                } else {
+                    alert('新增失敗！');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error updating disease');
+            });
+        }
     });
 });
 
@@ -124,7 +148,8 @@ $(document).ready(function() {
     const diseaseId = urlParams.get('id');
 
     // Fetch disease data based on ID
-    if (diseaseId) {
+    // 有抓到id則帶入資料修改
+    if (diseaseId !== null) {
         fetch(`http://localhost:5100/DermSight/disease?diseaseId=${diseaseId}`, {
             method: 'GET',
             headers: {
@@ -134,11 +159,20 @@ $(document).ready(function() {
         .then(response => response.json())
         .then(data => {
             if (data.status_code === 200) {
-                const disease = data.data;
-                $('#title').val(disease.title);
-                $('#type').val(disease.type);
-                $('#content').val(disease.content);
-                $('#isPin').val(disease.isPin.toString()); // Convert boolean to string
+                const disease = data.data.disease;
+                const symptoms = data.data.symptoms;
+                var symptomsdata = ""
+                $('#name').val(disease.name);
+                $('#description').val(disease.description);
+                symptoms.forEach((data,index) => {
+                    if(index === symptoms.length - 1){
+                        symptomsdata += data.content; // 不加逗號
+                    }
+                    else {
+                        symptomsdata += data.content + ","; // 加逗號
+                    }
+                });
+                $('#symptoms').val(symptomsdata);
             } else {
                 alert('Error fetching disease data');
             }
