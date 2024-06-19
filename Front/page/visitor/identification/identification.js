@@ -57,34 +57,67 @@ $(document).ready(function() {
     });
 
     // 上傳檔案
-    document.getElementById('upload').addEventListener('click', function() {
-        var fileInput = document.getElementById('imageUpload');
+    // document.getElementById('upload').addEventListener('click', function() {
+        
+    //     var fileInput = document.getElementById('imageUpload');
+    //     const accessToken = localStorage.getItem('accessToken');
+    //     var file = fileInput.files[0];
+    
+    //     if (!file) {
+    //         alert('請選擇一個檔案');
+    //         return;
+    //     }
+    
+    //     var formData = new FormData();
+    //     formData.append('Photo', file);
+    
+    //     fetch('http://localhost:5100/DermSight/Identification', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': `Bearer ${accessToken}`
+    //         },
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         console.log("API 回傳的資料:", response);
+    
+    //         if (response.status === 400) {
+    //             alert("請先登入");
+    //             window.location.href = '../verify/verify.html';
+    //         }
+    
+    //         return response.json();
+    //     })
+    //     .then(result => {
+    //         alert("上傳成功！");
+    //         document.getElementById('result').style.display = 'block';
+    //     })
+    //     .catch(error => {
+    //         console.error('發生錯誤:', error);
+    //         alert('發生錯誤，請稍後再試');
+    //     });
+    // });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadButton = document.getElementById('upload');
+
+    uploadButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
         const accessToken = localStorage.getItem('accessToken');
-        var file = fileInput.files[0];
-    
-        if (!file) {
-            alert('請選擇一個檔案');
-            return;
-        }
-    
-        var formData = new FormData();
-        formData.append('Photo', file);
     
         fetch('http://localhost:5100/DermSight/Identification', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
             },
-            body: formData
+            body: JSON.stringify({ randomNumber })
         })
         .then(response => {
             console.log("API 回傳的資料:", response);
-    
-            if (response.status === 400) {
-                alert("請先登入");
-                window.location.href = '../verify/verify.html';
-            }
-    
             return response.json();
         })
         .then(result => {
