@@ -1,15 +1,15 @@
 $(document).ready(function() {
-    function news(event) {
+    function disease(event) {
         event.preventDefault();
 
-        const form = document.getElementById('news-form');
+        const form = document.getElementById('disease-form');
         const data = new FormData(form);
         const token = localStorage.getItem('accessToken');
 
         const isPinValue = data.get('isPin') === 'true' ? 'true' : 'false';
             data.set('isPin', isPinValue);
 
-        fetch('http://localhost:5100/DermSight/News', {
+        fetch('http://localhost:5100/DermSight/disease', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -30,7 +30,7 @@ $(document).ready(function() {
             else{
                 alert('新增失敗');
             }
-            window.location.href = '../news/news.html';
+            window.location.href = '../disease/disease.html';
         })
         .catch(error => {
             console.error('錯誤:', error);
@@ -75,8 +75,77 @@ $(document).ready(function() {
     }
 
     checkLoginStatus();
-    $('#news-form').on('submit', function(event) {
-        news(event);
+    $('#disease-form').on('submit', function(event) {
+        disease(event);
     });
     
+    checkLoginStatus();
+    $('#disease-form').on('submit', function(event) {
+        disease(event);
+    });
+    
+    $('#edit-disease-form').on('submit', function(event) {
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const diseaseId = urlParams.get('id');
+        event.preventDefault();
+    
+        const formData = new FormData(this);
+    
+        const isPinValue = formData.get('isPin') === 'true' ? 'true' : 'false';
+        formData.set('isPin', isPinValue);
+        formData.set('diseaseId', diseaseId);    
+    
+        fetch(`http://localhost:5100/DermSight/disease`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                alert('修改成功！');
+                window.location.href = '../disease/disease.html'; // Redirect back to disease list
+            } else {
+                alert('修改失敗！');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating disease');
+        });
+    });
+});
+
+$(document).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const diseaseId = urlParams.get('id');
+
+    // Fetch disease data based on ID
+    if (diseaseId) {
+        fetch(`http://localhost:5100/DermSight/disease?diseaseId=${diseaseId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                const disease = data.data;
+                $('#title').val(disease.title);
+                $('#type').val(disease.type);
+                $('#content').val(disease.content);
+                $('#isPin').val(disease.isPin.toString()); // Convert boolean to string
+            } else {
+                alert('Error fetching disease data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch disease data');
+        });
+    }
 });

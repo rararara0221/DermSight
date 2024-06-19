@@ -1,39 +1,3 @@
-// document.addEventListener('DOMContentLoaded', (event) => {
-//     // 获取模态窗口
-//     const modal = document.getElementById('diseaseModal');
-//     const modalTitle = document.getElementById('modalTitle');
-//     const modalContent = document.getElementById('modalContent');
-
-//     // 获取打开模态窗口的按钮
-//     const btns = document.getElementsByClassName('openModalBtndisease');
-
-//     // 获取关闭按钮
-//     const closeButton = modal.getElementsByClassName('close')[0];
-
-//     // 当点击按钮时，打开模态窗口并更新内容
-//     for (let btn of btns) {
-//         btn.onclick = function(event) {
-//             event.preventDefault();  // 阻止默认行为（链接跳转）
-//             modalTitle.innerText = btn.getAttribute('data-title');
-//             modalContent.innerText = btn.getAttribute('data-content');
-//             modal.style.display = 'block';
-//         }
-//     }
-
-//     // 当点击关闭按钮时，关闭模态窗口
-//     closeButton.onclick = function() {
-//         modal.style.display = 'none';
-//     }
-
-//     // 当点击模态窗口外部时，关闭模态窗口
-//     window.onclick = function(event) {
-//         if (event.target === modal) {
-//             modal.style.display = 'none';
-//         }
-//     }
-// });
-
-
 // 最新消息
 $(document).ready(function() {
     const searchInput = $('#searchInput');
@@ -66,8 +30,8 @@ $(document).ready(function() {
                         ${disease.description}
                     </td>
                     <td>
-                        <a href="#">修改</a>
-                        <a href="#">刪除</a>
+                        <a href="../disease-data/disease-data.html?id=${disease.diseaseId}">修改</a>
+                        <a href="#" onclick="deletedisease(${disease.diseaseId})">刪除</a>
                     </td>
                 </tr>
             `);
@@ -194,4 +158,32 @@ $(document).ready(function() {
     checkLoginStatus();
 });
 
+function deletedisease(diseaseId) {
+    if (confirm('確定要刪除這條最新消息嗎？')) {
+        fetch(`http://localhost:5100/DermSight/disease?diseaseId=${diseaseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status_code === 200) {
+                alert('刪除成功');
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert('刪除失敗');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('刪除失敗');
+        });
+    }
+}
 
