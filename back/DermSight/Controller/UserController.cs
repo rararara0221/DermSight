@@ -5,6 +5,7 @@ using DermSight.Parameter;
 using DermSight.Service;
 using DermSight.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Nodes;
 
 namespace DermSight.Controller
 {
@@ -126,13 +127,21 @@ namespace DermSight.Controller
             {
                 int Role = UserService.GetRole(User.Account);
                 var jwt = JwtHelpers.GenerateToken(User.Account,Role);
+                userLoginResponse data = new(){
+                    Token = jwt,
+                    Role = Role
+                };
                 Response result = new(){ 
                     message = "登入成功",
                     status_code = 200,
-                    data = jwt 
+                    data = data
                 };
                 return Ok(result);
             }
+        }
+        private class userLoginResponse{
+            public required string Token { get; set; }
+            public int Role { get; set; }
         }
         #endregion
         #region 修改個人資料

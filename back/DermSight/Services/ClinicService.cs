@@ -37,7 +37,7 @@ namespace DermSight.Services
             if (CityId != 0)
             {
                 sql = $@"   
-                            SELECT a.clinicId,a.name,a.cityId,c.name+a.address address FROM (
+                            SELECT a.clinicId,a.name,a.phone,a.cityId,c.name+a.address address FROM (
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
                                 WHERE isDelete = 0 AND cityId = @CityId
                             )a
@@ -48,7 +48,7 @@ namespace DermSight.Services
             else
             {
                 sql = $@"   
-                            SELECT a.clinicId,a.name,a.cityId,c.name+a.address address FROM (
+                            SELECT a.clinicId,a.name,a.phone,a.cityId,c.name+a.address address FROM (
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
                                 WHERE isDelete = 0
                             )a
@@ -91,7 +91,7 @@ namespace DermSight.Services
             if (CityId != 0)
             {
                 sql = $@"   
-                            SELECT a.clinicId,a.name,a.cityId,c.name+a.address address FROM (
+                            SELECT a.clinicId,a.name,a.phone,a.cityId,c.name+a.address address FROM (
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
                                 WHERE n.cityId = @CityId AND name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0
                             )a
@@ -102,7 +102,7 @@ namespace DermSight.Services
             else
             {
                 sql = $@"   
-                            SELECT a.clinicId,a.name,a.cityId,c.name+a.address address FROM (
+                            SELECT a.clinicId,a.name,a.phone,a.cityId,c.name+a.address address FROM (
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
                                 WHERE name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0
                             )a
