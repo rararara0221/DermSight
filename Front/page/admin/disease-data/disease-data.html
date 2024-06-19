@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermSight - 皮膚病癥</title>
+    <link rel="stylesheet" href="disease-data.css">
+    <link rel="stylesheet" href="../../../css/index.css">
+    <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- logo -->
+        <div class="header-left">
+            <a href="../index/index.html">
+                <img src="../../../img/DermSight.png">
+            </a>
+        </div>
+        <!-- 目錄 -->
+        <div class="header-center">
+            <ul>
+                <li>
+                    <a href="../index/index.html">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        最近活動
+                    </a>
+                </li>
+                <li>
+                    <a href="../membership/membership.html">
+                        <i class="fa-solid fa-user"></i>
+                        會員管理
+                    </a>
+                </li>
+                <li>
+                    <a href="../news/news.html">
+                        <i class="fa-solid fa-newspaper"></i>
+                        最新消息
+                    </a>
+                </li>
+                <li>
+                    <a href="../disease/disease.html">
+                        <i class="fa-solid fa-hand-dots"></i>
+                        皮膚病癥
+                    </a>
+                </li>
+                <li>
+                    <a href="../identification/identification.html">
+                        <i class="fa-solid fa-camera"></i>
+                        影像辨識
+                    </a>
+                </li>
+                <li>
+                    <a href="../clinic/clinic.html">
+                        <i class="fa-solid fa-house-chimney-medical"></i>
+                        診所資訊
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="header-right" id="user-info">
+        </div>
+    </header>
+    <!-- Section -->
+    <div class="container">
+        <div class="form-container">
+            <div class="form-btn">
+                <button id="news-btn">最新消息</button>
+            </div>
+            <form id="news-form">
+                <input type="text" placeholder="標題" name="name" required>
+                <input type="text" placeholder="內容" name="description" required>
+                <input type="text" placeholder="內容" name="content" required>
+                <select id="isPin" name="isPin">
+                    <option value="true">置頂</option>
+                    <option value="false">不置頂</option>
+                </select>
+                <button type="submit">確認</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        Copyright © 2024 DermSight All rights reserved.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="disease-data.js"></script>
+</body>
+</html>

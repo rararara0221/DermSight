@@ -91,7 +91,7 @@ namespace DermSight.Services
                           SELECT @newsId
                         "; 
             using var conn = new SqlConnection(cnstr);
-            return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Data.isPin});
+            return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Pin = Data.isPin});
         }
         // 修改資料
         public void Update(News Data)

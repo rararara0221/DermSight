@@ -69,19 +69,13 @@ namespace DermSight.Controller
         #region 新增診所
         [HttpPost]
         [Route("")]
-        public IActionResult InsertClinic([FromBody]ClinicInsert Data){
+        public IActionResult InsertClinic([FromForm]ClinicInsert Data){
             try{
                 if(ModelState.IsValid){
                     if(User.Identity == null || User.Identity.Name == null){
                         return BadRequest(new Response(){
                             status_code = 400,
                             message = "請先登入"
-                        });
-                    }
-                    else if(!User.IsInRole("Admin")){
-                        return BadRequest(new Response{
-                            status_code = 400,
-                            message = "權限不足"
                         });
                     }
                     int userId = UserService.GetDataByAccount(User.Identity.Name).userId;

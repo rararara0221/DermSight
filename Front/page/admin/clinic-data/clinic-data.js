@@ -1,15 +1,12 @@
 $(document).ready(function() {
-    function news(event) {
+    function clinic(event) {
         event.preventDefault();
 
-        const form = document.getElementById('news-form');
+        const form = document.getElementById('clinic-form');
         const data = new FormData(form);
         const token = localStorage.getItem('accessToken');
 
-        const isPinValue = data.get('isPin') === 'true' ? 'true' : 'false';
-            data.set('isPin', isPinValue);
-
-        fetch('http://localhost:5100/DermSight/News', {
+        fetch('http://localhost:5100/DermSight/clinic', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -30,7 +27,7 @@ $(document).ready(function() {
             else{
                 alert('新增失敗');
             }
-            window.location.href = '../news/news.html';
+            window.location.href = '../clinic/clinic.html';
         })
         .catch(error => {
             console.error('錯誤:', error);
@@ -75,8 +72,8 @@ $(document).ready(function() {
     }
 
     checkLoginStatus();
-    $('#news-form').on('submit', function(event) {
-        news(event);
+    $('#clinic-form').on('submit', function(event) {
+        clinic(event);
     });
     
 });
