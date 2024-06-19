@@ -116,9 +116,16 @@ async function login(event) {
 
         const result = await response.json();
         if (response.ok) {
-            localStorage.setItem('accesstoken',result.data)
+            localStorage.setItem('accessToken', result.data.accessToken); // 假设返回的数据中有 accessToken
             alert(result.message);
-            window.location.href = '../../user/index/index.html';
+
+            if (result.data.permission === '4') {
+                window.location.href = '../admin/index.html';
+            } else if (result.data.permission === '1') {
+                window.location.href = '../index/index.html';
+            } else {
+                window.location.href = '../index/index.html';
+            }
         } else {
             console.error('登入失敗:', result);
             alert(result.message || '登入失敗');

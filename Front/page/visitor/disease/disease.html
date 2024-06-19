@@ -31,7 +31,7 @@
                 <li>
                     <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病徵
+                        皮膚病癥
                     </a>
                 </li>
                 <li>
@@ -48,8 +48,7 @@
                 </li>
             </ul>
         </div>
-        <div class="header-right">
-            <a href="../verify/verify.html" >登入 / 註冊</a>
+        <div class="header-right" id="user-info">
         </div>
     </header>
     <!-- Section -->
@@ -57,137 +56,23 @@
         <div class="data">
             <div class="search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search">
-                <div>Search</div>
+                <input type="text" id="searchInput" placeholder="搜索疾病">
+                <div id="searchBtn">Search</div>
             </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
-            </div>
-            <div class="disease">
-                <a href="#" class="disease-title">
-                    接觸性皮膚病
-                </a>
-                <div class="disease-description">
-                    <p>接觸性皮膚炎是指某些物質引發皮膚發炎的過敏反應...</p>
-                </div>
+            <div id="disease-container">
             </div>
             <div class="page">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            2
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            3
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
-                    </li>
+                <ul id="pagination">
                 </ul>
             </div>
         </div>
     </section>
     
     <footer>
-        Copyright © 2024 DermSight Company S.L. All rights reserved.
+        Copyright © 2024 DermSight All rights reserved.
     </footer>
-    <script>
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewImage = document.getElementById('imagePreview');
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="disease.js"></script>
 </body>
 </html>

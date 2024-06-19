@@ -19,16 +19,17 @@ namespace DermSight.Controller
         #region 使用者辨識
         [HttpPost]
         [Route("")]
-        public IActionResult Identification([FromBody]IFormFile Photo){
+        public IActionResult Identification([FromForm]IFormFile Photo){
             try
             {
-                if(User.Identity == null || User.Identity.Name == null){
-                    return BadRequest(new Response{
-                        status_code = 400,
-                        message = "請先登入"
-                    });
-                }
-                User user = UserService.GetDataByAccount(User.Identity.Name);
+                // User user = UserService.GetDataByAccount(User.Identity.Name);
+                // if(user == null){
+                //     return BadRequest(new Response{
+                //         status_code = 400,
+                //         message = "請先登入"
+                //     });
+                // }
+                
                 // 日後呼叫辨識模型處理後
                 // 儲存結果並回傳結果
                 // var response = IdentificationModel( user.userId, Photo );
@@ -69,7 +70,7 @@ namespace DermSight.Controller
         #endregion
         
         #region 獲取紀錄列表
-        [HttpPost]
+        [HttpGet]
         [Route("AllRecord")]
         public IActionResult GetAllRecordList([FromQuery]int isCorrect,[FromQuery]int DiseaseId = 0,[FromQuery]int page = 1){
             try

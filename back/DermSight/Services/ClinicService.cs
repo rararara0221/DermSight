@@ -41,7 +41,7 @@ namespace DermSight.Services
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
                                 WHERE isDelete = 0 AND cityId = @CityId
                             )a
-                            LEFT JOIN [City] c ON c.cityId = a.cityId
+                            JOIN [City] c ON c.cityId = a.cityId
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item}
                         ";
             }
@@ -93,7 +93,7 @@ namespace DermSight.Services
                 sql = $@"   
                             SELECT a.clinicId,a.name,a.cityId,c.name+a.address address FROM (
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.cityId,address,name) r_num,* FROM [Clinic] n
-                                WHERE name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0 AND cityId = @CityId
+                                WHERE n.cityId = @CityId AND name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0
                             )a
                             LEFT JOIN [City] c ON c.cityId = a.cityId
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item}
@@ -117,7 +117,10 @@ namespace DermSight.Services
 
         private void SetMaxPage(string Search, Forpaging Forpaging, int CityId)
         {
-            string sql = $@"SELECT COUNT(*) FROM [Clinic] WHERE name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0 AND cityId = @CityId";
+            string sql = $@"SELECT COUNT(*) FROM [Clinic] WHERE name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0";
+            if(CityId != 0){
+                sql = $@"SELECT COUNT(*) FROM [Clinic] WHERE cityId = @CityId AND name LIKE '%{Search}%' OR address LIKE '%{Search}%' AND isDelete = 0";
+            }
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql, new { CityId });
             Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
@@ -166,6 +169,17 @@ namespace DermSight.Services
             var sql = $@"UPDATE [Clinic] SET isDelete = 1 WHERE clinicId = @Clinicid ;";
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql, new { Clinicid });    
+        }
+
+        public List<City> GetCityList(){
+            var sql = $@"
+                            SELECT 
+                                *
+                            FROM [City]
+                        ";
+            using var conn = new SqlConnection(cnstr);
+            List<City> data = conn.Query<City>(sql).ToList();
+            return data;
         }
     }
 }

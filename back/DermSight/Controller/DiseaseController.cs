@@ -46,7 +46,7 @@ namespace DermSight.Controller
         #region 取得疾病(單一)
         [HttpGet]
         [Route("")]
-        public IActionResult GetDisease([FromQuery]int DiseaseId){
+        public IActionResult GetDisease([FromQuery]int diseaseId){
             try
             {
                 // if(User.Identity == null || User.Identity.Name == null){
@@ -55,7 +55,7 @@ namespace DermSight.Controller
                 //         message = "請先登入"
                 //     });
                 // }
-                DiseaseSymptom Data = DiseaseService.GetDiseaseSymptom(DiseaseId);
+                DiseaseSymptom Data = DiseaseService.GetDiseaseSymptom(diseaseId);
                 if(Data.Disease == null){
                     return Ok(new Response(){
                         status_code = 204,

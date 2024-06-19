@@ -48,8 +48,7 @@
                 </li>
             </ul>
         </div>
-        <div class="header-right">
-            <a href="../verify/verify.html" >登入 / 註冊</a>
+        <div class="header-right" id="user-info">
         </div>
     </header>
     <!-- Section -->
@@ -93,27 +92,10 @@
     </section>
     
     <footer>
-        Copyright © 2024 DermSight Company S.L. All rights reserved.
+        Copyright © 2024 DermSight All rights reserved.
     </footer>
-    <script>
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewImage = document.getElementById('imagePreview');
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        const upload = document.getElementById('upload');
-        const result = document.getElementById('result');
 
-        upload.addEventListener('click', function() {
-            result.style.display = 'block';
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="identification.js"></script>
 </body>
 </html>

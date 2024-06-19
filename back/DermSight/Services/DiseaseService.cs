@@ -35,7 +35,7 @@ namespace DermSight.Services
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,* FROM [Disease] n
                                 WHERE isDelete = 0
                             )a
-                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
             List<Disease> data = new(conn.Query<Disease>(sql));
             return (List<Disease>)conn.Query<Disease>(sql);
@@ -49,7 +49,7 @@ namespace DermSight.Services
                         ";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
-            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.NewsItem));
             Forpaging.SetRightPage();
         }
         
@@ -59,7 +59,7 @@ namespace DermSight.Services
                                 SELECT ROW_NUMBER() OVER(ORDER BY n.diseaseId DESC) r_num,* FROM [Disease] n
                                 WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND isDelete = 0
                             )a
-                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }";
+                            WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
             using var conn = new SqlConnection(cnstr);
             List<Disease> data = new(conn.Query<Disease>(sql));
             return (List<Disease>)conn.Query<Disease>(sql);
@@ -70,7 +70,7 @@ namespace DermSight.Services
             string sql = $@"SELECT COUNT(*) FROM [Disease] WHERE name LIKE '%{Search}%' OR description LIKE '%{Search}%' AND isDelete = 0";
             using var conn = new SqlConnection(cnstr);
             int row = conn.QueryFirst<int>(sql);
-            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.Item));
+            Forpaging.MaxPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(row) / Forpaging.NewsItem));
             Forpaging.SetRightPage();
         }
 
@@ -83,7 +83,7 @@ namespace DermSight.Services
             return conn.QueryFirstOrDefault<Disease>(sql);
         }
 
-        public DiseaseSymptom GetDiseaseSymptom(int DiseaseId)
+        public DiseaseSymptom GetDiseaseSymptom(int diseaseId)
         {
             var Dsql = $@"
                             SELECT
@@ -91,27 +91,27 @@ namespace DermSight.Services
                                 s.content
                             FROM Disease d
                             JOIN Symptom s ON s.diseaseId = d.diseaseId
-                            WHERE d.diseaseId = @DiseaseId AND d.isDelete = 0
+                            WHERE d.diseaseId = @diseaseId AND d.isDelete = 0
                         ";
             var Ssql = $@"
                             SELECT
                                 s.*
                             FROM Disease d
                             JOIN Symptom s ON s.diseaseId = d.diseaseId
-                            WHERE d.diseaseId = @DiseaseId AND d.isDelete = 0
+                            WHERE d.diseaseId = @diseaseId AND d.isDelete = 0
                         ";
             var Psql = $@"
                             SELECT
                                 route
                             FROM [Photo] p
                             JOIN [Disease] d ON d.diseaseId = p.diseaseId
-                            WHERE p.diseaseId = @DiseaseId AND d.isDelete = 0
+                            WHERE p.diseaseId = @diseaseId AND d.isDelete = 0
                         ";
             using var conn = new SqlConnection(cnstr);
             DiseaseSymptom data = new(){
-                Disease = conn.QueryFirstOrDefault<Disease>(Dsql, new{ DiseaseId }),
-                Symptoms = conn.Query<Symptom>(Ssql, new{ DiseaseId }).ToList(),
-                Route = conn.QueryFirstOrDefault<string>(Psql, new{ DiseaseId })
+                Disease = conn.QueryFirstOrDefault<Disease>(Dsql, new{ diseaseId }),
+                Symptoms = conn.Query<Symptom>(Ssql, new{ diseaseId }).ToList(),
+                Route = conn.QueryFirstOrDefault<string>(Psql, new{ diseaseId })
             };
             return data;
         }

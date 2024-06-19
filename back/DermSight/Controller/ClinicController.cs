@@ -17,16 +17,39 @@ namespace DermSight.Controller
         #region 取得診所列表
         [HttpGet]
         [Route("AllClinic")]
-        public IActionResult GetAllClinicList([FromQuery]string? Search,[FromQuery]int CityId = 0,[FromQuery]int page = 1){
+        public IActionResult GetAllClinicList([FromQuery]string? Search,[FromQuery]int CityId=0,[FromQuery]int page = 1){
             try
             {
                 ClinicViewModel data = new()
                 {
                     Forpaging = new Forpaging(page),
                     Search = string.IsNullOrEmpty(Search) ? "" : Search,
-                    CityId = CityId,
+                    CityId = CityId
                 };
                 data.ClinicList = ClinicService.GetAllClinicList(data);
+                return Ok(new Response(){
+                    status_code = 200,
+                    message = "讀取成功",
+                    data = data
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response{
+                    status_code = 400,
+                    message = e.Message
+                });
+            }
+        }
+        #endregion
+
+        #region 取得縣市列表
+        [HttpGet]
+        [Route("AllCity")]
+        public IActionResult GetCityList(){
+            try
+            {
+                List<City> data = ClinicService.GetCityList();
                 return Ok(new Response(){
                     status_code = 200,
                     message = "讀取成功",

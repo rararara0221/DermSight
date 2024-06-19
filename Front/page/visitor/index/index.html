@@ -31,7 +31,7 @@
                 <li>
                     <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病徵
+                        皮膚病癥
                     </a>
                 </li>
                 <li>
@@ -48,8 +48,7 @@
                 </li>
             </ul>
         </div>
-        <div class="header-right">
-            <a href="../verify/verify.html" >登入 / 註冊</a>
+        <div class="header-right" id="user-info">
         </div>
     </header>
     <!-- Section -->
@@ -58,13 +57,11 @@
             <div class="news-title">
                 職業病相關訊息
             </div>
-            <div class="news-list">
-                <ul id="news-container"></ul>
+            <div id="news-container" class="news-list">
+                <ul></ul>
             </div>
-            <div class="pagination">
+            <div class="page">
                 <ul id="pagination">
-                    <li><a href="#" class="page-link" data-page="prev"><i class="fa-solid fa-chevron-left"></i></a></li>
-                    <li><a href="#" class="page-link" data-page="next"><i class="fa-solid fa-chevron-right"></i></a></li>
                 </ul>
             </div>
         </section>
@@ -136,13 +133,15 @@
         Copyright © 2024 DermSight All rights reserved.
     </footer>
 
-    <div id="newsModal" class="modal">
+    <div id="news-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3 id="modalTitle">标题</h3>
-            <p id="modalContent">内容</p>
+            <p id="modal-type"></p>
+            <h2 id="modal-title"></h2>
+            <p id="modal-content"></p>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="index.js"></script>
 </body>

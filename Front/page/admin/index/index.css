@@ -44,30 +44,36 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
-
-.content img{
-    width: 50%;
-}
-.news{
+.news, .disease{
     width: 46%;
     height: 425px;
     padding: 20px;
     border-radius: 15px;
     background-color: #e6e6e6;
 }
-.news-title{
+.news-content, .disease-content{
+    display: flex;
+    align-items: center;
+}
+.news-title, .disease-title{
     color: 4E6460;
     font-size: 24px;
     text-align: center;
 }
-.news-list{
+.new-type{
+    background-color: #6bb0b0;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 10px;
+}
+.news-list, .disease-list{
     padding: 20px;
 }
-.news-list ul{
+.news-list ul, .disease-list ul{
     list-style-type: none;
 }
-.news-list li a{
-    width: 100%;
+.news-list li a, .disease-list li a{
+    width: 100%-padding;
     color: rgb(107, 176, 176);
     padding: 10px;
     background-color: #fff;
@@ -77,7 +83,7 @@ button {
     justify-content: space-between;
     align-items: center;
 }
-.news-list li a p:last-child::before{
+.news-list li a p:last-child::before, .disease-list li a p:last-child::before{
     content: "";
     margin: 0 15px;
     border-left: 1px #626262 solid;
@@ -93,13 +99,6 @@ button {
     padding: 10px;
     margin: 10px;
     color: #626262;
-}
-.news-content{
-    width: 64%;
-    height: 425px;
-    padding: 20px;
-    border-radius: 15px;
-    background-color: #c5dbdb;
 }
 .chart-container{
     width: 97%;
