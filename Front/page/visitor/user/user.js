@@ -155,6 +155,65 @@ $(document).ready(function () {
 
 // 最新消息
 $(document).ready(function() {
+
+    // const searchInput = $('#searchInput');
+    // const searchBtn = $('#searchBtn');
+    // const newsContainer = $('#news-container');
+    const pagination = $('#pagination');
+    const diseaseContainer = $('#disease');
+
+    diseaseContainer.on('click', '.disease-id', function(event) {
+        event.preventDefault();
+        diseaseId = $(this).data('disease-id');
+        console.log('Clicked diseaseId:', diseaseId);
+        fetchrecord(1, diseaseId);
+    });
+
+    // 渲染疾病列表
+    function renderdisease(diseaseData) {
+        diseaseContainer.empty(); // 清空之前的内容
+        diseaseContainer.append($(`
+            <li>
+                <a href="#" class="disease-id" data-disease-id="${0}">
+                    全部
+                </a>
+            </li>
+        `));
+        diseaseData.forEach(disease => {
+            const diseaseElement = $(`
+                <li>
+                    <a href="#" class="disease-id" data-disease-id="${disease.diseaseId}">
+                        ${disease.name}
+                    </a>
+                </li>
+            `);
+
+            diseaseContainer.append(diseaseElement);
+        });
+    }
+    // 获取疾病列表
+    function fetchdisease() {
+        let url = `http://localhost:5100/DermSight/Disease/Alldisease`;
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(result) {
+                console.log('API Response:', result);
+                if (result.status_code === 200 && result.data && Array.isArray(result.data.diseaseList)) {
+                    renderdisease(result.data.diseaseList);
+                } else {
+                    console.error('Invalid data format:', result);
+                    alert('獲取疾病列表失敗，請稍後再試！');
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching clinics:', error);
+                alert('獲取疾病列表失敗，請稍後再試！');
+            }
+        });
+    }
+
     function renderrecord(recordData) {
         const recordContainer = $('#record-container');
         recordContainer.empty(); // 清空之前的内容
@@ -163,21 +222,23 @@ $(document).ready(function() {
             const recordElement = $(`
 
                 <li class="record-disease">
-                        <img src="../../../img/disease.jpg">
-                        <div class="record-content">
-                            <p class="record-diseasename">
-                                ${record.diseaseName}
-                            </p>
-                            <p class="record-date">
-                                ${new Date(record.record.time).toLocaleDateString()} <!-- record.record.time -->
-                            </p>
-                        </div>
-                    </li>
+                    <img src="../../../img/disease.jpg">
+                    <div class="record-content">
+                        <p class="record-diseasename">
+                            ${record.diseaseName}
+                        </p>
+                        <p class="record-date">
+                            ${new Date(record.record.time).toLocaleDateString()} <!-- record.record.time -->
+                        </p>
+                    </div>
+                    <i class="fa-solid fa-trash record-trash" onclick="deleteRecord(${record.record.recordId})"></i>
+                </li>
             `);
 
             recordContainer.append(recordElement);
         });
     }
+    
 
     function showModal(type, title, content) {
         $('#modal-type').text(type);
@@ -208,10 +269,16 @@ $(document).ready(function() {
         }
     });
 
-    function fetchrecord(page) {
+    function fetchrecord(page, diseaseId = 0) {
+
+        let url = `http://localhost:5100/DermSight/Identification/AllRecord?page=${page}`;
+        if (diseaseId !== 0) {
+            url += `&DiseaseId=${diseaseId}`;
+        }
         const accessToken = localStorage.getItem("accessToken");
+        
         $.ajax({
-            url: `http://localhost:5100/DermSight/Identification/AllRecord?page=${page}`,
+            url: url,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -254,7 +321,7 @@ $(document).ready(function() {
     }
 
     // 监听分页按钮点击事件
-    $('#pagination').on('click', '.page-link', function(event) {
+    pagination.on('click', '.page-link', function(event) {
         event.preventDefault();
         const page = $(this).data('page');
         fetchrecord(page);
@@ -262,4 +329,35 @@ $(document).ready(function() {
 
     // 初始加载第一页新闻
     fetchrecord(1);
+    fetchdisease();
 });
+
+// 刪除紀錄
+function deleteRecord(recordId) {
+    if (confirm('確定要刪除這個辨識紀錄嗎？')) {
+        fetch(`http://localhost:5100/DermSight/Identification?recordId=${recordId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status_code === 200) {
+                alert('刪除成功');
+                location.reload(); // Reload the page to reflect changes
+            } else {
+                alert('刪除失敗');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('刪除失敗');
+        });
+    }
+}

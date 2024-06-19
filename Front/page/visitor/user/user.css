@@ -258,6 +258,17 @@
     background-color: #6bb0b0;
 }
 
+.record-trash{
+    height: 100%;
+    display: flex;
+    margin-left: auto;
+    align-items: flex-end;
+    cursor: pointer;
+}
+.record-trash:hover{
+    color: red;
+}
+
 /* 弹跳动画 */
 @keyframes modalfadein {
     from { top: -300px; opacity: 0; }
