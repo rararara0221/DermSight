@@ -96,21 +96,14 @@ async function login(event) {
 
     const form = document.getElementById('login-form');
     const formData = new FormData(form);
-
-    // 简单的验证逻辑
-    const data = {
-        Account: formData.get('Account'),
-        Password: formData.get('Password'),
-    };
-
-    if (!data.Account || !data.Password) {
-        alert("請確切輸入登入資料");
-        return;
-    }
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch("http://localhost:5100/DermSight/User/Login", {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: formData
         });
 
@@ -143,7 +136,6 @@ async function forget(event) {
     const form = document.getElementById('forget-form');
     const data = new FormData(form);
 
-    const token = localStorage.getItem('accesstoken');
     try {
         const response = await fetch("http://localhost:5100/DermSight/User/ForgetPassword", {
             method: 'POST',

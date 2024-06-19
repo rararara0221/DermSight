@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DermSight - 會員管理</title>
-    <link rel="stylesheet" href="membership.css">
+    <title>DermSight - 最新消息 </title>
+    <link rel="stylesheet" href="news-data.css">
     <link rel="stylesheet" href="../../../css/index.css">
     <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,59 +60,31 @@
                 </li>
             </ul>
         </div>
-        <div class="header-right">
-            <a href="../admin/admin.html" >
-                <i class="fa-solid fa-circle-user"></i>
-                Admin
-            </a>
+        <div class="header-right" id="user-info">
         </div>
     </header>
     <!-- Section -->
-    <section class="content">
-        <section class="member">
-            <div class="member-title">
-                會員列表
+    <div class="container">
+        <div class="form-container">
+            <div class="form-btn">
+                <button id="news-btn">最新消息</button>
             </div>
-            <div class="member-top">
-                <div class="search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search">
-                    <div id="searchBtn">Search</div>
-                </div>
-            </div>
-            <div class="member-list" >
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                大頭貼
-                            </th>
-                            <th>
-                                姓名
-                            </th>
-                            <th>
-                                Email
-                            </th>
-                            <th>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tfoot id="member-container">
-                    </tfoot>
-                </table>
-            </div>
-            <div class="page">
-                <ul id="disease-pagination">
-                </ul>
-            </div>
-        </section>
-    </section>
-
+            <form id="news-form">
+                <input type="text" placeholder="標題" name="title" required>
+                <input type="text" placeholder="類別" name="type" required>
+                <input type="text" placeholder="內容" name="content" required>
+                <select id="isPin" name="isPin">
+                    <option value="true">置頂</option>
+                    <option value="false">不置頂</option>
+                </select>
+                <button type="submit" onclick="news(event)">確認</button>
+            </form>
+        </div>
+    </div>
+    
     <footer>
         Copyright © 2024 DermSight All rights reserved.
     </footer>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="membership.js"></script>
+    <script src="news-data.js"></script>
 </body>
 </html>
