@@ -76,21 +76,56 @@ $(document).ready(function() {
 
     // 渲染分页导航
     function renderPagination(maxPage, currentPage) {
-        pagination.empty(); // 清空之前的分页
-
-        // 创建分页按钮
-        for (let i = 1; i <= maxPage; i++) {
-            const pageItem = $(`
+        if(currentPage<=maxPage){
+            pagination.empty(); // 清空之前的分页
+            pagination.append($(`
                 <li>
-                    <a href="#" class="page-link" data-page="${i}">${i}</a>
+                    <a href="#" class="page-link" data-page="${1}"><<</a>
                 </li>
-            `);
-
-            if (i === currentPage) {
-                pageItem.find('a').css('font-weight', 'bold'); // 当前页高亮显示
+                <li>
+                    <a href="#" class="page-link" data-page="${currentPage - 1}"><</a>
+                </li>
+            `));
+            if(currentPage<4){
+                // 创建分页按钮
+                for (let i = currentPage < 4 ? 1 : currentPage - 2 ; i <= (currentPage + 2 > maxPage ? maxPage : currentPage + 2) ; i++) {
+                    const pageItem = $(`
+                        <li>
+                            <a href="#" class="page-link" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+    
+                    if (i === currentPage) {
+                        pageItem.find('a').css('font-weight', 'bold'); // 当前页高亮显示
+                    }
+    
+                    pagination.append(pageItem);
+                }
             }
-
-            pagination.append(pageItem);
+            else{
+                // 创建分页按钮
+                for (let i = currentPage < 4 ? 1 : currentPage - 2 ; i <= (currentPage + 2 > maxPage ? maxPage : currentPage + 2) ; i++) {
+                    const pageItem = $(`
+                        <li>
+                            <a href="#" class="page-link" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+    
+                    if (i === currentPage) {
+                        pageItem.find('a').css('font-weight', 'bold'); // 当前页高亮显示
+                    }
+    
+                    pagination.append(pageItem);
+                }
+            }
+            pagination.append($(`
+                <li>
+                    <a href="#" class="page-link" data-page="${currentPage + 1}">></a>
+                </li>
+                <li>
+                    <a href="#" class="page-link" data-page="${maxPage}">>></a>
+                </li>
+            `));
         }
     }
 
