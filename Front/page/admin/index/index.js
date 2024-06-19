@@ -182,7 +182,7 @@ $(document).ready(function() {
     // 使用者登入註冊
     function checkLoginStatus() {
         const userInfoContainer = $('#user-info');
-        const accessToken = localStorage.getItem('accesstoken');
+        const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
             // 使用accessToken获取用户名等用户信息
@@ -212,7 +212,7 @@ $(document).ready(function() {
                 window.location.href = '../../visitor/index/index.html';
             });
         } else {
-            alert("請先登入")
+            alert("請先登入 沒token")
             window.location.href = '../../visitor/verify/verify.html';
         }
     }
