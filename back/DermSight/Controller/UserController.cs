@@ -216,6 +216,10 @@ namespace DermSight.Controller
                 if(User.Identity == null || User.Identity.Name == null) return BadRequest(new Response{status_code = 400,message = "請先登入"});
                 User data = UserService.GetDataByAccount(User.Identity.Name);
                 data.Password = string.Empty;
+                var request = HttpContext.Request;
+                var host = request.Host.Value; // 獲取主機名和端口
+                var scheme = request.Scheme; // 獲取協議（例如：http 或 https）
+                data.Photo =  $"{scheme}://{host}/images/{data.Photo}";
                 return Ok(new Response(){
                     status_code = 200,
                     message = "讀取成功",
