@@ -4,6 +4,7 @@ using DermSight.Services;
 using DermSight.Parameter;
 using DermSight.Service;
 using DermSight.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DermSight.Controller
 {
@@ -183,7 +184,7 @@ namespace DermSight.Controller
         #endregion
         #region 後台管理者
         //取得目前所有使用者
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("AllUser")]
         public IActionResult AllUser([FromQuery]string? Search,[FromQuery]int page = 1){

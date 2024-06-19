@@ -8,18 +8,23 @@ using DermSight.ViewModels;
 namespace DermSight.Controller
 {
     [Route("DermSight/[controller]")]
-    public class IdentificationController(IWebHostEnvironment _evn,RecordService _RecordService,DiseaseService _DiseaseService,UserService _UserService) : ControllerBase
+    public class IdentificationController(IConfiguration _configuration,IWebHostEnvironment _evn,RecordService _RecordService,DiseaseService _DiseaseService,UserService _UserService) : ControllerBase
     {
-
+        public readonly string wwwrootRoute = _configuration.GetValue<string>("FrontRoute:Route");
         public RecordService RecordService = _RecordService;
         public DiseaseService DiseaseService = _DiseaseService;
         public UserService UserService = _UserService;
         readonly IWebHostEnvironment evn = _evn;
-        
+        public class ModelResponse{
+            public int UserId { get; set; }
+            public bool isCorrect { get; set; }
+            public int DiseaseId { get; set; }
+            public required string PhotoRoute { get; set; }
+        };
         #region 使用者辨識
         [HttpPost]
         [Route("")]
-        public IActionResult Identification([FromBody]IFormFile Photo){
+        public IActionResult Identification([FromBody]int DiseaseId){
             try
             {
                 if(User.Identity == null || User.Identity.Name == null){
@@ -29,6 +34,16 @@ namespace DermSight.Controller
                     });
                 }
                 User user = UserService.GetDataByAccount(User.Identity.Name);
+
+                // (模擬)模型回傳結果
+                ModelResponse modelResponse = new(){
+                    UserId = user.userId,
+                    DiseaseId = DiseaseId,
+                    isCorrect = DiseaseId > 0,
+                    PhotoRoute = "Record/default.jpg" // user.userId + ".jpg";
+                };
+                int recordId = RecordService.Insert(modelResponse);
+
                 // 日後呼叫辨識模型處理後
                 // 儲存結果並回傳結果
                 // var response = IdentificationModel( user.userId, Photo );
@@ -56,7 +71,8 @@ namespace DermSight.Controller
                 // });
                 return Ok(new Response{
                     status_code = 200,
-                    message = "辨識完成"
+                    message = "辨識完成",
+                    data = recordId
                 });
             }
             catch (Exception e){
@@ -69,9 +85,9 @@ namespace DermSight.Controller
         #endregion
         
         #region 獲取紀錄列表
-        [HttpPost]
+        [HttpGet]
         [Route("AllRecord")]
-        public IActionResult GetAllRecordList([FromQuery]int isCorrect,[FromQuery]int DiseaseId = 0,[FromQuery]int page = 1){
+        public IActionResult GetAllRecordList([FromQuery]bool isCorrect,[FromQuery]int DiseaseId = 0,[FromQuery]int page = 1){
             try
             {
                 if(User.Identity == null || User.Identity.Name == null){
@@ -82,6 +98,7 @@ namespace DermSight.Controller
                 }
                 RecordViewModel data = new()
                 {
+                    UserId = UserService.GetDataByAccount(User.Identity.Name).userId,
                     Forpaging = new Forpaging(page),
                     DiseaseId = DiseaseId,
                     isCorrect = isCorrect
@@ -118,11 +135,10 @@ namespace DermSight.Controller
                     });
                 }
                 User user = UserService.GetDataByAccount(User.Identity.Name);
-                // DiseaseService.DeleteRecord(user.userId,RecordId);
+                RecordService.DeleteRecord(user.userId,RecordId);
                 return Ok(new Response{
                     status_code = 200,
-                    message = "刪除成功",
-                    data = user
+                    message = "刪除成功"
                 });
             }
             catch (Exception e)

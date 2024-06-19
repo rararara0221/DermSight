@@ -16,6 +16,11 @@
                 return 5;
             }
         }
+        public int DiseaseItem{
+            get{
+                return 6;
+            }
+        }
         public Forpaging()
         {
             this.NowPage = 1;
