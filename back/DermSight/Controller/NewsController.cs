@@ -136,7 +136,7 @@ namespace DermSight.Controller
         #region 修改最新消息
         [HttpPut]
         [Route("")]
-        public IActionResult UpdateNews([FromBody]NewsUpdate Data){
+        public IActionResult UpdateNews([FromForm]NewsUpdate Data){
             try
             {
                 if(ModelState.IsValid){
@@ -146,12 +146,12 @@ namespace DermSight.Controller
                             message = "請先登入"
                         });
                     }
-                    else if(!User.IsInRole("Admin")){
-                        return BadRequest(new Response{
-                            status_code = 400,
-                            message = "權限不足"
-                        });
-                    }
+                    // else if(!User.IsInRole("Admin")){
+                    //     return BadRequest(new Response{
+                    //         status_code = 400,
+                    //         message = "權限不足"
+                    //     });
+                    // }
                     if(NewsService.Get(Data.NewsId) == null){
                         return BadRequest(new Response(){
                             status_code = 400,
@@ -209,12 +209,12 @@ namespace DermSight.Controller
                         message = "請先登入"
                     });
                 }
-                else if(!User.IsInRole("Admin")){
-                    return BadRequest(new Response{
-                        status_code = 400,
-                        message = "權限不足"
-                    });
-                }
+                // else if(!User.IsInRole("Admin")){
+                //     return BadRequest(new Response{
+                //         status_code = 400,
+                //         message = "權限不足"
+                //     });
+                // }
                 if(NewsService.Get(NewsId) == null){
                     return BadRequest(new Response(){
                         status_code = 400,

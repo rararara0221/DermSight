@@ -85,10 +85,10 @@ namespace DermSight.Services
         public int Create(News Data)
         {
             var sql = $@" 
-                          INSERT INTO News(userId,title,type,content,pin)
-                          VALUES(@UserId,@Title,@Type,@Content,@Pin)
-                          DECLARE @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
-                          SELECT @newsId
+                        INSERT INTO News(userId,title,type,content,pin)
+                        VALUES(@UserId,@Title,@Type,@Content,@Pin)
+                        DECLARE @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
+                        SELECT @newsId
                         "; 
             using var conn = new SqlConnection(cnstr);
             return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Pin = Data.isPin});
@@ -96,7 +96,7 @@ namespace DermSight.Services
         // 修改資料
         public void Update(News Data)
         {
-            var sql = $@"UPDATE News SET title = @Title ,content = @Content ,pin = @Pin WHERE newsId = @Newsid";
+            var sql = $@"UPDATE News SET title = @Title ,content = @Content ,pin = @isPin WHERE newsId = @Newsid";
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql, Data); // new { Data.NewsId, Data.Title, Data.Content ,Data.Pin}
         }
