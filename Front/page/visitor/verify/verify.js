@@ -112,9 +112,9 @@ async function login(event) {
             localStorage.setItem('accessToken', result.data.token); // 假设返回的数据中有 accessToken
             alert(result.message);
 
-            if (result.data.role === '4') {
-                window.location.href = '../admin/index.html';
-            } else if (result.data.permission === '1') {
+            if (result.data.role === 4) {
+                window.location.href = '../../admin/index/index.html';
+            } else if (result.data.permission === 1) {
                 window.location.href = '../index/index.html';
             } else {
                 window.location.href = '../index/index.html';
