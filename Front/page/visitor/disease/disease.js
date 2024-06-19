@@ -95,7 +95,7 @@ $(document).ready(function() {
         event.preventDefault();
         const diseaseId = $(this).data('disease-id');
         console.log('Clicked diseaseId:', diseaseId);
-        window.location.href = `disease-details.html?diseaseId=${diseaseId}`;
+        window.location.href = `../disease-details/disease-details.html?diseaseId=${diseaseId}`;
     });
 });
 

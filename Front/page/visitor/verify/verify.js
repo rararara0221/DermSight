@@ -109,7 +109,7 @@ async function login(event) {
 
         const result = await response.json();
         if (response.ok) {
-            localStorage.setItem('accessToken', result.data.accessToken); // 假设返回的数据中有 accessToken
+            localStorage.setItem('accessToken', result.data); // 假设返回的数据中有 accessToken
             alert(result.message);
 
             if (result.data.permission === '4') {

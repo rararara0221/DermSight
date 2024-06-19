@@ -48,14 +48,18 @@ $(document).ready(function() {
         if (search !== '') {
             url += `&Search=${search}`;
         }
+        const accessToken = localStorage.getItem('accessToken');
 
         $.ajax({
             url: url,
             method: 'GET',
+            headers: {
+                        "Authorization": "Bearer " + accessToken
+                    },
             success: function(result) {
                 console.log('API Response:', result);
-                if (result.status_code === 200 && result.data && Array.isArray(result.data.memberList)) {
-                    rendermembers(result.data.memberList);
+                if (result.status_code === 200 && result.data && Array.isArray(result.data.user)) {
+                    rendermembers(result.data.user);
                     renderPagination(result.data.forpaging.maxPage, page); // 更新分页导航
                 } else {
                     console.error('Invalid data format:', result);
@@ -112,7 +116,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     function checkLoginStatus() {
         const userInfoContainer = $('#user-info');
-        const accessToken = localStorage.getItem('accesstoken');
+        const accessToken = localStorage.getItem('accessToken');
 
         if (accessToken) {
             // 使用accessToken获取用户名等用户信息
