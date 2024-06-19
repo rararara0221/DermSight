@@ -67,9 +67,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 //授權宣告
 app.UseAuthentication();
 app.UseAuthorization();
+
+//使用靜態檔案
+app.UseStaticFiles();
+
 //Cors設定
 app.UseCors(builder =>
 {

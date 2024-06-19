@@ -152,7 +152,7 @@ namespace DermSight.Services
                     recordData.DiseaseName = name;
                     return recordData;
                 },
-                new{ UserId },
+                new{ UserId , DiseaseId },
                 splitOn: "recordId,RecordPhotoId,name"
             ).ToList();
             data = result;
