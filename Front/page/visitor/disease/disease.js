@@ -2,49 +2,43 @@
 $(document).ready(function() {
     const searchInput = $('#searchInput');
     const searchBtn = $('#searchBtn');
-    const memberContainer = $('#member-container');
+    const diseaseContainer = $('#disease-container');
     const pagination = $('#pagination');
 
     // 初始化加载第一页的疾病列表
-    fetchmembers(1);
+    fetchDiseases(1);
 
     // 搜索按钮点击事件
     searchBtn.on('click', function() {
         const searchTerm = searchInput.val().trim();
         if (searchTerm !== '') {
-            fetchmembers(1, searchTerm); // 搜索时默认加载第一页
+            fetchDiseases(1, searchTerm); // 搜索时默认加载第一页
         }
     });
 
     // 渲染疾病列表
-    function rendermembers(memberData) {
-        memberContainer.empty(); // 清空之前的内容
+    function renderDiseases(diseaseData) {
+        diseaseContainer.empty(); // 清空之前的内容
 
-        memberData.forEach(member => {
-            const memberElement = $(`
-                <tr>
-                    <td>
-                        <img src="../../../img/user.png">
-                    </td>
-                    <td>
-                        ${member.name}
-                    </td>
-                    <td>
-                        ${member.mail}
-                    </td>
-                    <td>
-                        <a href="#"  data-member-id="${member.memberId}" >查看內容</a>
-                    </td>
-                </tr>
+        diseaseData.forEach(disease => {
+            const diseaseElement = $(`
+                <div class="disease">
+                    <a href="#" class="disease-title" data-disease-id="${disease.diseaseId}">
+                        ${disease.name}
+                    </a>
+                    <div class="disease-description">
+                        <p>${disease.description}</p>
+                    </div>
+                </div>
             `);
 
-            memberContainer.append(memberElement);
+            diseaseContainer.append(diseaseElement);
         });
     }
 
     // 获取疾病列表
-    function fetchmembers(page, search = '') {
-        let url = `http://localhost:5100/DermSight/User/AllUser?page=${page}`;
+    function fetchDiseases(page, search = '') {
+        let url = `http://localhost:5100/DermSight/Disease/AllDisease?page=${page}`;
         if (search !== '') {
             url += `&Search=${search}`;
         }
@@ -54,17 +48,17 @@ $(document).ready(function() {
             method: 'GET',
             success: function(result) {
                 console.log('API Response:', result);
-                if (result.status_code === 200 && result.data && Array.isArray(result.data.memberList)) {
-                    rendermembers(result.data.memberList);
+                if (result.status_code === 200 && result.data && Array.isArray(result.data.diseaseList)) {
+                    renderDiseases(result.data.diseaseList);
                     renderPagination(result.data.forpaging.maxPage, page); // 更新分页导航
                 } else {
                     console.error('Invalid data format:', result);
-                    alert('獲取會員列表失败，請稍後再試！');
+                    alert('獲取疾病列表失败，請稍後再試！');
                 }
             },
             error: function(error) {
-                console.error('Error fetching members:', error);
-                alert('獲取會員列表失败，請稍後再試！');
+                console.error('Error fetching diseases:', error);
+                alert('獲取疾病列表失败，請稍後再試！');
             }
         });
     }
@@ -93,15 +87,15 @@ $(document).ready(function() {
     pagination.on('click', '.page-link', function(event) {
         event.preventDefault();
         const page = $(this).data('page');
-        fetchmembers(page, searchInput.val().trim()); // 每次点击页码重新获取搜索框的值
+        fetchDiseases(page, searchInput.val().trim()); // 每次点击页码重新获取搜索框的值
     });
 
-    // memberId裡面的資料
-    memberContainer.on('click', '.member-title', function(event) {
+    // diseaseId裡面的資料
+    diseaseContainer.on('click', '.disease-title', function(event) {
         event.preventDefault();
-        const memberId = $(this).data('member-id');
-        console.log('Clicked memberId:', memberId);
-        window.location.href = `member-details.html?memberId=${memberId}`;
+        const diseaseId = $(this).data('disease-id');
+        console.log('Clicked diseaseId:', diseaseId);
+        window.location.href = `disease-details.html?diseaseId=${diseaseId}`;
     });
 });
 

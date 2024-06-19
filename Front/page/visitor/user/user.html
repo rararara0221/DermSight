@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DermSight - 皮膚病癥</title>
-    <link rel="stylesheet" href="clinic.css">
+    <title>DermSight - 診斷紀錄</title>
+    <link rel="stylesheet" href="user.css">
     <link rel="stylesheet" href="../../../css/index.css">
     <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,9 +29,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../clinic/clinic.html">
+                    <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病徵
+                        皮膚病癥
                     </a>
                 </li>
                 <li>
@@ -53,33 +53,58 @@
     </header>
     <!-- Section -->
     <section class="content">
-        <div class="class">
-            <p>
-                診所地區
-            </p>
-            <ul id="city">
-            </ul>
-        </div>
-        <div class="data">
+        <section class="user" id="user-container">
+        </section>
+        
+        <section class="record">
+            <div class="record-title">
+                診斷紀錄
+            </div>
             <div class="search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="診所或路名" />
-                <div id="searchBtn">Search</div>
+                <input type="text" placeholder="Search">
+                <div>Search</div>
             </div>
-            <div id="clinic-container">
+            <div class="record-description">
+                <ul id="record-container">
+                    
+                </ul>
             </div>
             <div class="page">
                 <ul id="pagination">
                 </ul>
             </div>
-        </div>
-        </div>
+        </section>
     </section>
-    
     <footer>
         Copyright © 2024 DermSight All rights reserved.
     </footer>
 
+    <div id="modalEdit" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>編輯</h3>
+            <form id="edit-form" class="input">
+                <input type="text" name="name" placeholder="姓名" required>
+                <button class="confirm">確認</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalPwd" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>修改密碼</h3>
+            <form id="pwd-form" class="input">
+                <input type="text" placeholder="舊密碼" required>
+                <input type="text" placeholder="新密碼" required>
+                <input type="text" placeholder="再次輸入新密碼" required>
+                <button class="confirm">確認</button>
+            </form>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="clinic.js"></script>
+    <script src="user.js"></script>
+</body>
 </html>

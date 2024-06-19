@@ -20,12 +20,6 @@ namespace DermSight.Controller
         public IActionResult GetAllNewsList([FromQuery]string? Search,[FromQuery]int page = 1){
             try
             {
-                // if(User.Identity == null || User.Identity.Name == null){
-                //     return BadRequest(new Response(){
-                //         status_code = 400,
-                //         message = "請先登入"
-                //     });
-                // }
                 NewsViewModel data = new()
                 {
                     Forpaging = new Forpaging(page),

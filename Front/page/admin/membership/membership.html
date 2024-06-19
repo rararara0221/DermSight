@@ -76,14 +76,14 @@
             <div class="member-top">
                 <div class="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search">
-                    <div>Search</div>
+                    <input type="text" id="searchInput" placeholder="Search">
+                    <div id="searchBtn">Search</div>
                 </div>
                 <a href="#" class="member-insert">
                     <i class="fa-solid fa-plus"></i>
                 </a>
             </div>
-            <div class="member-list">
+            <div class="member-list" >
                 <table>
                     <thead>
                         <tr>
@@ -100,177 +100,12 @@
                             </th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="../../../img/user.png">
-                            </td>
-                            <td>
-                                小皮
-                            </td>
-                            <td>
-                                wangxiaopi@gmail.com
-                            </td>
-                            <td>
-                                <a href="#">查看內容</a>
-                            </td>
-                        </tr>
+                    <tfoot id="member-container">
                     </tfoot>
                 </table>
             </div>
             <div class="page">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            1
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            2
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            3
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
-                    </li>
+                <ul id="disease-pagination">
                 </ul>
             </div>
         </section>
@@ -279,6 +114,8 @@
     <footer>
         Copyright © 2024 DermSight All rights reserved.
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="membership.js"></script>
 </body>
 </html>

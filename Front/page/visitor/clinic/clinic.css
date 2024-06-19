@@ -78,20 +78,18 @@
     padding: 25px;
     border: 1px #6bb0b0 solid;
     border-radius: 25px;
-    margin: auto;
-    margin-bottom: 50px;
 }
-.disease{
+.clinic{
     padding: 25px;
     margin: 10px;
     border-bottom: 1px solid #6bb0b0;
 }
-.disease-title{
+.clinic-title{
     color: #375c5c;
     font-size: 18px;
     position:relative;
 }
-.disease-title::after{
+.clinic-title::after{
     color: #ced299;
     content:"";
     display:block;
@@ -102,18 +100,18 @@
     right: 0;
     transition:.4s;
 }
-.disease-title:hover::after{
+.clinic-title:hover::after{
     width: 100%;
     left: 0;
 }
-.disease-description{
+.clinic-description{
     padding: 10px 0;
     color: #404040;
 }
-.disease-description p{
+.clinic-description p{
     color: #404040;
 }
-.disease-description span{
+.clinic-description span{
     color: #6bb0b0;
     padding: 0 5px;
 }

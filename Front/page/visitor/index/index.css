@@ -37,7 +37,7 @@ h1{
     list-style-type: none;
 }
 .news-list li a{
-    width: 100%;
+    width: 100%-padding;
     color: rgb(107, 176, 176);
     padding: 10px;
     background-color: #fff;
@@ -52,13 +52,13 @@ h1{
     margin: 0 15px;
     border-left: 1px #626262 solid;
 }
-.pagination ul{
+.page ul{
     list-style-type: none;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.pagination ul li a{
+.page ul li a{
     text-align: center;
     padding: 10px;
     margin: 10px;
@@ -135,44 +135,52 @@ footer{
 }
 
 .modal {
-    display: none; /* 初始隐藏 */
-    position: fixed; /* 固定位置 */
-    z-index: 1; /* 置于顶层 */
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* 如果内容超出视窗，则滚动 */
-    background-color: rgba(0, 0, 0, 0.4); /* 半透明背景 */
+    overflow: auto;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* 黑色背景，透明度为 40% */
 }
 
-/* 模态窗口内容 */
 .modal-content {
+    border-radius: 15px;
     background-color: #fefefe;
-    margin: 15% auto; /* 15% 顶部和底部距离 */
+    margin: 15% auto; /* 15% 从顶部和底部居中 */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* 宽度 */
-    max-width: 400px; /* 最大宽度 */
-    border-radius: 10px; /* 圆角 */
-    position: relative; /* 相对定位 */
-    animation: modalfadein 0.4s; /* 弹跳动画 */
+    width: 80%; /* 80% 宽度 */
+    animation: modalfadein 0.5s;
+}
+.modal-content h2{
+    color: #6bb0b0;
+}
+.modal-content p{
+    color: #1a1a1a;
+}
+#modal-type{
+    color: #6bb0b0;
+}
+#modal-type::before{
+    content: "";
+    margin-right: 15px;
+    border-left: 1px #626262 solid;
 }
 
-/* 关闭按钮 */
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 20px;
 }
 
 .close:hover,
 .close:focus {
-    color: #6bb0b0;
+    color: black;
     text-decoration: none;
     cursor: pointer;
 }

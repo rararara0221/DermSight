@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DermSight - 皮膚病癥</title>
-    <link rel="stylesheet" href="clinic.css">
+    <link rel="stylesheet" href="disease-details.css">
     <link rel="stylesheet" href="../../../css/index.css">
     <script src="https://kit.fontawesome.com/075fd1ca93.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,9 +29,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../clinic/clinic.html">
+                    <a href="../disease/disease.html">
                         <i class="fa-solid fa-hand-dots"></i>
-                        皮膚病徵
+                        皮膚病癥
                     </a>
                 </li>
                 <li>
@@ -53,33 +53,17 @@
     </header>
     <!-- Section -->
     <section class="content">
-        <div class="class">
-            <p>
-                診所地區
-            </p>
-            <ul id="city">
-            </ul>
-        </div>
         <div class="data">
-            <div class="search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="診所或路名" />
-                <div id="searchBtn">Search</div>
-            </div>
-            <div id="clinic-container">
-            </div>
-            <div class="page">
-                <ul id="pagination">
-                </ul>
-            </div>
-        </div>
+            <div class="disease-name"></div>
+            <div class="disease-description"></div>
         </div>
     </section>
     
     <footer>
-        Copyright © 2024 DermSight All rights reserved.
+        Copyright © 2024 DermSight Company S.L. All rights reserved.
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="clinic.js"></script>
+    <script src="disease-details.js"></script>
+</body>
 </html>
