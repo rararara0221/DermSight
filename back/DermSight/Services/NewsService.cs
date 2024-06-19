@@ -31,7 +31,7 @@ namespace DermSight.Services
         private List<News> GetNewsList(Forpaging forpaging)
         {
             string sql = $@"SELECT * FROM (
-                                SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.isPin DESC, n.newsId DESC) r_num,* FROM [News] n
                                 WHERE isDelete = 0
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
@@ -55,7 +55,7 @@ namespace DermSight.Services
         private List<News> GetNewsList(string Search,Forpaging forpaging)
         {
             string sql = $@"SELECT * FROM (
-                                SELECT ROW_NUMBER() OVER(ORDER BY n.newsId DESC) r_num,* FROM [News] n
+                                SELECT ROW_NUMBER() OVER(ORDER BY n.isPin, n.newsId DESC) r_num,* FROM [News] n
                                 WHERE title LIKE '%{Search}%' OR content LIKE '%{Search}%' AND isDelete = 0
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.NewsItem + 1} AND {forpaging.NowPage * forpaging.NewsItem }";
@@ -85,18 +85,18 @@ namespace DermSight.Services
         public int Create(News Data)
         {
             var sql = $@" 
-                        INSERT INTO News(userId,title,type,content,pin)
-                        VALUES(@UserId,@Title,@Type,@Content,@Pin)
+                        INSERT INTO News(userId,title,type,content,isPin)
+                        VALUES(@UserId,@Title,@Type,@Content,@isPin)
                         DECLARE @newsId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
                         SELECT @newsId
                         "; 
             using var conn = new SqlConnection(cnstr);
-            return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Pin = Data.isPin});
+            return conn.QueryFirst<int>(sql, new{Data.UserId, Data.Title, Data.Type, Data.Content, Data.isPin});
         }
         // 修改資料
         public void Update(News Data)
         {
-            var sql = $@"UPDATE News SET title = @Title ,content = @Content ,pin = @isPin WHERE newsId = @Newsid";
+            var sql = $@"UPDATE News SET title = @Title ,content = @Content ,isPin = @isPin WHERE newsId = @Newsid";
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql, Data); // new { Data.NewsId, Data.Title, Data.Content ,Data.Pin}
         }
