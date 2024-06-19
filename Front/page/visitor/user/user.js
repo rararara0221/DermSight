@@ -166,23 +166,13 @@ $(document).ready(function() {
                         <img src="../../../img/disease.jpg">
                         <div class="record-content">
                             <p class="record-diseasename">
-                                接觸性皮膚炎
+                                ${record.diseaseName}
                             </p>
                             <p class="record-date">
-                                ${new Date(record.time).toLocaleDateString()}
+                                ${new Date(record.record.time).toLocaleDateString()} <!-- record.record.time -->
                             </p>
                         </div>
                     </li>
-
-                <li>
-                    <a href="#" class="openModalBtnrecord" data-type="${record.type}" data-title="${record.title}" data-content="${record.content}">
-                        <div class="record-content">
-                            <p class="new-type">${record.type}</p>
-                            <p>${record.title}</p>
-                        </div>
-                        <p>${new Date(record.time).toLocaleDateString()}</p>
-                    </a>
-                </li>
             `);
 
             recordContainer.append(recordElement);
@@ -219,9 +209,13 @@ $(document).ready(function() {
     });
 
     function fetchrecord(page) {
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
-            url: `http://localhost:5100/DermSight/record/Allrecord?page=${page}`,
+            url: `http://localhost:5100/DermSight/Identification/AllRecord?page=${page}`,
             method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
             success: function(result) {
                 console.log('API Response:', result);
                 if (result.status_code === 200 && result.data && Array.isArray(result.data.recordList)) {
