@@ -70,27 +70,32 @@ namespace DermSight.Services
                                         r.isCorrect,
                                         r.time,
                                         rp.RecordPhotoId,
-                                        rp.route
+                                        rp.route,
+                                        d.diseaseId did,
+                                        d.name
                                     FROM 
                                         [DiseaseRecord] r
                                     INNER JOIN 
                                         [RecordPhoto] rp ON r.recordId = rp.recordId
-                                    WHERE r.userId = @UserId AND isDelete = 0 /* AND r.DiseaseId = @DiseaseId */
+                                    INNER JOIN
+                                        [Disease] d ON r.diseaseId = d.diseaseId
+                                    WHERE r.userId = @UserId AND r.isDelete = 0 /* AND r.DiseaseId = @DiseaseId */
                                 )b
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }
                         ";
             // 使用 Dapper 查詢資料
-            var result = conn.Query<RecordData, DiseaseRecord, RecordPhoto, RecordData>(
+            var result = conn.Query<RecordData, DiseaseRecord, RecordPhoto, string, RecordData>(
                 rpsql,
-                (recordData, record, photo) =>
+                (recordData, record, photo, name) =>
                 {
                     recordData.Record = record;
                     recordData.RecordPhoto = photo;
+                    recordData.DiseaseName = name;
                     return recordData;
                 },
                 new{ UserId },
-                splitOn: "recordId,RecordPhotoId"
+                splitOn: "recordId,RecordPhotoId,name"
             ).ToList();
             data = result;
             return data;
@@ -122,28 +127,33 @@ namespace DermSight.Services
                                         r.isCorrect,
                                         r.time,
                                         rp.RecordPhotoId,
-                                        rp.route
+                                        rp.route,
+                                        d.diseaseId did,
+                                        d.name
                                     FROM 
                                         [DiseaseRecord] r
                                     INNER JOIN 
                                         [RecordPhoto] rp ON r.recordId = rp.recordId
-                                    WHERE r.userId = @UserId AND r.DiseaseId = @DiseaseId AND isDelete = 0
+                                    INNER JOIN
+                                        [Disease] d ON r.diseaseId = d.diseaseId
+                                    WHERE r.userId = @UserId AND r.isDelete = 0 AND r.DiseaseId = @DiseaseId 
                                 )b
                             )a
                             WHERE a.r_num BETWEEN {(forpaging.NowPage - 1) * forpaging.Item + 1} AND {forpaging.NowPage * forpaging.Item }
                         ";
             using var conn = new SqlConnection(cnstr);
             // 使用 Dapper 查詢資料
-            var result = conn.Query<RecordData, DiseaseRecord, RecordPhoto, RecordData>(
+            var result = conn.Query<RecordData, DiseaseRecord, RecordPhoto, string, RecordData>(
                 sql,
-                (recordData, record, photo) =>
+                (recordData, record, photo, name) =>
                 {
                     recordData.Record = record;
                     recordData.RecordPhoto = photo;
+                    recordData.DiseaseName = name;
                     return recordData;
                 },
-                new{ UserId , DiseaseId },
-                splitOn: "RecordId,RecordPhotoId"
+                new{ UserId },
+                splitOn: "recordId,RecordPhotoId,name"
             ).ToList();
             data = result;
             return data;
