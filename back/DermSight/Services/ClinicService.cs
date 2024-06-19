@@ -135,7 +135,8 @@ namespace DermSight.Services
                                 cl.clinicId,
                                 cl.name,
                                 cl.cityId,
-                                ci.name+cl.address address 
+                                cl.phone,
+                                ci.name+cl.address address
                             FROM [Clinic] cl 
                             LEFT JOIN [City] ci ON ci.cityId = cl.cityId
                             WHERE clinicId = @ClinicId AND isDelete = 0
@@ -148,10 +149,10 @@ namespace DermSight.Services
         public int Create(Clinic Data)
         {
             var sql = $@" 
-                          INSERT INTO [Clinic](name, cityId, address)
-                          VALUES(@Name, @CityId, @Address);
-                          DECLARE @clinicId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
-                          SELECT @clinicId
+                        INSERT INTO [Clinic](name, cityId, address)
+                        VALUES(@Name, @CityId, @Address);
+                        DECLARE @clinicId INT = SCOPE_IDENTITY() /*自動擷取剛剛新增資料的id*/
+                        SELECT @clinicId
                         ";
             using var conn = new SqlConnection(cnstr);
             return conn.QueryFirst<int>(sql, new { Data.Name, Data.CityId, Data.Address });
@@ -159,7 +160,7 @@ namespace DermSight.Services
         // 修改資料
         public void Update(Clinic Data)
         {
-            var sql = $@"UPDATE [Clinic] SET name = @Name ,cityId = @CityId ,address = @Address WHERE clinicId = @Clinicid";
+            var sql = $@"UPDATE [Clinic] SET name = @Name ,cityId = @CityId ,address = @Address,phone = @Phone WHERE clinicId = @Clinicid";
             using var conn = new SqlConnection(cnstr);
             conn.Execute(sql, Data); // new { Data.ClinicId, Data.Title, Data.Content ,Data.Pin}
         }

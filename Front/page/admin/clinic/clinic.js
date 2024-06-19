@@ -33,8 +33,8 @@ $(document).ready(function() {
                         ${clinic.address}
                     </td>
                     <td>
-                        <a href="#">修改</a>
-                        <a href="#">刪除</a>
+                        <a href="../clinic-data/clinic-data.html?id=${clinic.clinicId}">修改</a>
+                        <a href="#" onclick="deleteclinic(${clinic.clinicId})">刪除</a>
                     </td>
                 </tr>
             `);
@@ -64,12 +64,12 @@ $(document).ready(function() {
                     renderPagination(result.data.forpaging.maxPage, page); // 更新分页导航
                 } else {
                     console.error('Invalid data format:', result);
-                    alert('獲取最新消息列表失败，請稍後再試！');
+                    alert('獲取診所列表失败，請稍後再試！');
                 }
             },
             error: function(error) {
                 console.error('Error fetching clinic:', error);
-                alert('獲取最新消息列表失败，請稍後再試！');
+                alert('獲取診所消息列表失败，請稍後再試！');
             }
         });
     }
